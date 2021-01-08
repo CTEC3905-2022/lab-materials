@@ -48,6 +48,12 @@ Once saved, the editor will activate auto-complete snippets for HTML.
 Now use your existing knowledge to create a simple page with some visible content.
 You can refer to [the module slides](https://ctec3905-2020-21.github.io/splash/?file=html.md&slide=3) or [this simple tutorial](https://www.w3schools.com/html/html5_intro.asp) for guidance.
 
+Make sure your code is properly indented.
+If you have a question about this, ask it.
+Its very important to develop good habits from the beginning.
+Good indentation throughout your assignment code is worth 5% of the mark.
+A single mistake will cost you 2.5%, multiple mistakes will cost you 5%.
+
 Load the page into Google Chrome by opening the file in your file manager.
 If Google Chrome is not your default browser, you may want to set it to be the default (at least during the course of this module).
 Alternatively, with the file open in Atom, click and drag the tab at the top of the file and drop it as a new tab in Chrome (i.e. drop onto the tab container at the top of the Chrome window).

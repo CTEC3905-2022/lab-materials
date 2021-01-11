@@ -7,3 +7,5 @@ If you find any mistakes or have any suggestions then please report them to your
 
 - [Lab 1: Getting started](https://ctec3905-2020-21.github.io/lab-materials/lab-01.html)
 ([source](lab-01.md))
+- [Lab 2: A bit more of everything](https://ctec3905-2020-21.github.io/lab-materials/lab-02.html)
+([source](lab-02.md))

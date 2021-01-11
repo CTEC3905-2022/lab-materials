@@ -111,9 +111,9 @@ Now we are going to create a git repository from our code.
 Git allows us to make incremental improvements to our code whilst also allowing free experimentation.
 
 Open the git command line.
-If you are on windows, use the `git bash` console.
+If you are on Windows, use the `git bash` console.
 
-Change the current directory to you **lab-01** folder:
+Change the current directory to your **lab-01** folder:
 
 ```bash
 cd path/to/your/CTEC3905/labs/lab-01

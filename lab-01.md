@@ -66,13 +66,11 @@ Check your code in the [HTML validator](https://validator.w3.org/) and correct a
 
 ### Add some CSS styles
 
-Create a **styles.css** file inside a **css** folder and link it in your HTML file by adding this line in the HTML head section:
-```html
-<link rel="stylesheet" href="css/styles.css">
-```
+Create a **styles.css** file and link it in your HTML file by adding this line in the HTML head section:
 
-Note how the URL in the href attribute points to the file within the folder.
-Mistakes here are common causes of confusion!
+```html
+<link rel="stylesheet" href="styles.css">
+```
 
 Add the following line to your **styles.css** file:
 

@@ -134,6 +134,9 @@ Check the situation, you should see three untracked files.
 git status
 ```
 
+Make sure you **always** check your code with the [HTML validator](https://validator.w3.org/) before committing.
+Try not to commit invalid code to your repository.
+
 Before committing, git requires that we place changes into a *staging area* also known as *the index*.
 
 Add the whole project into the staging area.

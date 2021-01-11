@@ -83,10 +83,10 @@ Try some more styles in your **styles.css** file, reloading the page each time.
 
 ## Add some javascript
 
-Create a **scripts.js** file inside a **js** folder and link to it in your HTML file just before the closing `</body>` tag like this:
+Create a **scripts.js** file and link to it in your HTML file just before the closing `</body>` tag like this:
 
 ```html
-<script src="js/scripts.js"></script>
+<script src="scripts.js"></script>
 ```
 
 Add the following to your **scripts.js** file:

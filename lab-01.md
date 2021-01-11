@@ -75,7 +75,7 @@ Create a **styles.css** file and link it in your HTML file by adding this line i
 Add the following line to your **styles.css** file:
 
 ```css
-body { background: #f99; }
+body { background: #099; }
 ```
 
 Reload the page in Chrome.

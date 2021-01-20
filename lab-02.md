@@ -1,10 +1,11 @@
 # Lab 2: A bit more of everything
 
+This week we will continue with a gradual introduction to CSS layout and introduce JavaScript event handling.
+
 > These instructions are maintained on github and you can help improve them.
 If you find a problem with this document, if there is any ambiguity or confusion, we can update it right now, during the lab session.
 For small changes, updated version can be available to everyone within a few minutes.
 
-This week we will continue with a gradual introduction to CSS layout and introduce JavaScript event handling.
 
 Try to understand every step in this lab.
 Please **ask questions** if you are confused by any of the steps.
@@ -15,9 +16,10 @@ If you complete everything today, well done!
 
 If not, don't worry - use your **Self-directed Learning Time (SDL)** to work on your code before next week's lab. If you get stuck, **keep trying**! A solution will be provided next week.
 
-> For all exercises, [validate](https://validator.w3.org/) your HTML.
 
 ## A simple menu
+
+> For all exercises, [validate](https://validator.w3.org/) your HTML.
 
 Create a folder **lab-02** next to your **lab-01** folder from last week.
 In your folder, create a file `index.html` with a basic HTML template and add a `<nav>` tag to your document with **five links** nested inside it.

@@ -118,7 +118,6 @@ Change the current directory to your **lab-work** folder:
 
 ```bash
 cd path/to/your/CTEC3905/lab-work
-
 ```
 
 Make sure you are now in the correct location and convert your folder into a git repository.

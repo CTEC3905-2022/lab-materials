@@ -26,11 +26,11 @@ In your folder, create a file `index.html` with a basic HTML template and add a 
 
 ```html
 <nav>
-	<a href="#">Home</a>
-	<a href="#">Blog</a>
-	<a href="#">Gallery</a>
-	<a href="#">Contact</a>
-	<a href="#">About</a>
+  <a href="#">Home</a>
+  <a href="#">Blog</a>
+  <a href="#">Gallery</a>
+  <a href="#">Contact</a>
+  <a href="#">About</a>
 </nav>
 ```
 
@@ -44,7 +44,7 @@ Style the menu to appear horizontally across the top of the page using **CSS fle
 
 ```css
 nav {
-	display: flex;
+  display: flex;
 }
 ```
 
@@ -59,15 +59,15 @@ Experiment with the **box-model** properties of the `nav a` ruleset to determine
 
 ```css
 nav {
-	display: flex;
-	background-color: aValueChosenByYou;
+  display: flex;
+  background-color: aValueChosenByYou;
 }
 
 nav a {
-	background-color: aValueChosenByYou;
-	color: aValueChosenByYou;
-	padding: aValueChosenByYou;
-	margin: aValueChosenByYou;
+  background-color: aValueChosenByYou;
+  color: aValueChosenByYou;
+  padding: aValueChosenByYou;
+  margin: aValueChosenByYou;
 }
 ```
 
@@ -87,17 +87,17 @@ Include a CSS [`transition`](https://developer.mozilla.org/en-US/docs/Web/CSS/tr
 
 ```css
 nav a {
-	background-color: aValueChosenByYou;
-	color: aValueChosenByYou;
-	padding: aValueChosenByYou;
-	margin: aValueChosenByYou;
+  background-color: aValueChosenByYou;
+  color: aValueChosenByYou;
+  padding: aValueChosenByYou;
+  margin: aValueChosenByYou;
 
-	/* try different values - e.g. 3s */
-	transition: background-color 0.7s;
+  /* try different values - e.g. 3s */
+  transition: background-color 0.7s;
 }
 
 nav a:hover {
-	background-color: aValueChosenByYou;
+  background-color: aValueChosenByYou;
 }
 ```
 
@@ -115,22 +115,22 @@ Add a `main` element below the `nav` element, containing a paragraph (`p` elemen
 
 ```html
 <header>
-	<h1>Your page title</h1>
+  <h1>Your page title</h1>
 </header>
 <nav>
-	<a href="#">Home</a>
-	<a href="#">Blog</a>
-	<a href="#">Gallery</a>
-	<a href="#">Contact</a>
-	<a href="#">About</a>
+  <a href="#">Home</a>
+  <a href="#">Blog</a>
+  <a href="#">Gallery</a>
+  <a href="#">Contact</a>
+  <a href="#">About</a>
 </nav>
 <main>
-	<p>
-		Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-		Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-		Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-		Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-	</p>
+  <p>
+    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+    Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+    Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+    Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+  </p>
 </main>
 ```
 
@@ -145,7 +145,7 @@ Fix this by setting the `overflow` property on both the `header` and the `main` 
 
 ```css
 header, main {
-	overflow: auto;
+  overflow: auto;
 }
 ```
 
@@ -184,21 +184,21 @@ Convert your `main` element into a `section` element and wrap the `nav` and the 
 
 ```html
 <main>
-	<nav>
-		<a href="#">Home</a>
-		<a href="#">Blog</a>
-		<a href="#">Gallery</a>
-		<a href="#">Contact</a>
-		<a href="#">About</a>
-	</nav>
-	<section>
-		<p>
-			Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-			Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-			Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-			Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-		</p>
-	</section>
+  <nav>
+    <a href="#">Home</a>
+    <a href="#">Blog</a>
+    <a href="#">Gallery</a>
+    <a href="#">Contact</a>
+    <a href="#">About</a>
+  </nav>
+  <section>
+    <p>
+      Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+      Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+      Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+      Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+    </p>
+  </section>
 </main>
 ```
 
@@ -240,7 +240,7 @@ In this case the function name is `greetMe`.
 
 ```js
 function greetMe() {
-	console.log("Hello!!");
+  console.log("Hello!!");
 }
 ```
 
@@ -254,7 +254,7 @@ For example, add a second paragraph to your `section` element with a `button` el
 
 ```html
 <p>
-	Clicking <button id="myTrigger">here</button> should trigger the event handler.
+  Clicking <button id="myTrigger">here</button> should trigger the event handler.
 </p>
 ```
 

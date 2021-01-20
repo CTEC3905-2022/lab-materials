@@ -1,12 +1,15 @@
 # Lab 2: A bit more of everything
 
+> These instructions are maintained on github and you can help improve them.
+If you find a problem with this document, if there is any ambiguity or confusion, we can update it right now, during the lab session.
+For small changes, updated version can be available to everyone within a few minutes.
+
 This week we will continue with a gradual introduction to CSS layout and introduce JavaScript event handling.
 
 Try to understand every step in this lab.
 Please **ask questions** if you are confused by any of the steps.
 Your tutors are **happy to explain** anything in as much detail as necessary (this is what we are here for).
 
-If you find a problem with this document, if there is any ambiguity or confusion, we can update it right now, in the lab session.
 
 If you complete everything today, well done!
 
@@ -272,9 +275,13 @@ Try adding an argument to the event handler function and use `console.log` to pr
 
 Try linking another function that sets `myTrigger.textContent` to a value of your choice.
 
+## Validate and commit
+
 If you got this far, well done.
-Initialise a new git repository in the `lab-01` folder and commit the code.
-Refer to the *lab 1* instructions as necessary.
+
+Check your code with the [HTML validator](https://validator.w3.org/) before committing the code to your **lab-work** repository.
+Refer to the *lab 1* instructions or ask your tutors as necessary.
+Remember that to use the Atom git integration, you would need to open the **lab-work** folder in Atom.
 
 ## 02 Lab learning outcomes
 

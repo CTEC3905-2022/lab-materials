@@ -33,10 +33,11 @@ Explore the site, understand how it is structured and ask questions if you have 
 
 Now we are going to create our first project.
 
-Create a folder where you will store all the module code and *within* that folder, create a folder called **lab-01**.
+Create a folder where you will store all the module code and *within* that folder, create a folder called **lab-work**.
+This will become a git repository eventually containing all the work from the lab sessions.
 
 Its best to keep the code for each lab session separate.
-We will be creating git repositories from some folders, its important to keep them distinct.
+For todays work, create another folder called **lab-01** within the **lab-work** folder.
 
 Open Atom and select `File -> Open Folder` or `ctrl+shift+O` and select your **lab-01** folder.
 This should open a panel on the left side showing your empty folder.
@@ -113,10 +114,10 @@ Git allows us to make incremental improvements to our code whilst also allowing 
 Open the git command line.
 If you are on Windows, use the `git bash` console.
 
-Change the current directory to your **lab-01** folder:
+Change the current directory to your **lab-work** folder:
 
 ```bash
-cd path/to/your/CTEC3905/labs/lab-01
+cd path/to/your/CTEC3905/lab-work
 
 ```
 
@@ -148,7 +149,7 @@ The last dot is important, it refers to the current folder.
 Finally, commit your work to the repository with a simple message.
 
 ```bash
-git commit -m "my first commit"
+git commit -m "lab-01: my first commit"
 ```
 
 Now, make some changes to your project and repeat the steps with a new commit message.

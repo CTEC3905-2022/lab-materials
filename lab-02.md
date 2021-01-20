@@ -172,7 +172,7 @@ This moves the `nav` to the right-hand edge of its container (in this case, the 
 You should see the main and nav elements squeeze onto one row.
 If your site does not do this, speak to your tutor to find out why.
 
-## Try using flexbox to achieve a similar result
+## Use flexbox to achieve a similar result
 
 Remove the `float: right` rule from the `nav` ruleset.
 Your `main` and `nav` elements should be each on their own row.
@@ -247,10 +247,10 @@ function greetMe() {
 Now we need to trigger the function to run when a `click` event fires.
 So we need to access an element in the page.
 The easiest way to do this is to add an element with an `id="value"` attribute into the page.
-Constants will automatically be declared in the javascript context for all elements with **single word** (i.e. no spaces) `id` attributes.
+Constants will automatically be declared in the JavaScript context for all elements with **single word** (i.e. no spaces) `id` attributes.
 
 Add an element with an `id` attribute to your document.
-For example, add a second paragraph to your `main` element with a `button` element inside it.
+For example, add a second paragraph to your `section` element with a `button` element inside it.
 
 ```html
 <p>
@@ -260,7 +260,7 @@ For example, add a second paragraph to your `main` element with a `button` eleme
 
 Reload the page.
 Notice the `button` element has the attribute `id="myTrigger"`.
-This will create a global `myTrigger` variable in the javascript context.
+This will create a global `myTrigger` variable in the JavaScript context.
 
 Type `myTrigger` into the Chrome developer tools console.
 You should see the button is identified.

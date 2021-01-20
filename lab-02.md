@@ -1,6 +1,6 @@
 # Lab 2: A bit more of everything
 
-This week we will continue with a gradual introduction to CSS layout and introduce javascript event handling.
+This week we will continue with a gradual introduction to CSS layout and introduce JavaScript event handling.
 
 Try to understand every step in this lab.
 Please **ask questions** if you are confused by any of the steps.
@@ -10,7 +10,7 @@ If you find a problem with this document, if there is any ambiguity or confusion
 
 If you complete everything today, well done!
 
-If not, don't worry - use your **Self-directed Learning Time (SDL)** to work on your code before next week's lab. If you get stuck, **keep trying**! The simplest version of the solutions will be demonstrated next week.
+If not, don't worry - use your **Self-directed Learning Time (SDL)** to work on your code before next week's lab. If you get stuck, **keep trying**! A solution will be provided next week.
 
 > For all exercises, [validate](https://validator.w3.org/) your HTML.
 
@@ -101,9 +101,9 @@ If you add it to the `nav a:hover` ruleset then the transition will only apply w
 Make sure you understand this.
 Experiment with different values of the transition duration.
 
-If you don't understand what's going on, ask a good question.
+If you don't understand exactly what's going on, ask a question that will help you (and others) to rule out some possibilities.
 
-## Use flexbox to reposition menu items
+## Expand the page structure
 
 Add a `header` element above the `nav` element, containing a top-level heading (`h1` element) with a few words.
 Add a `main` element below the `nav` element, containing a paragraph (`p` element) with some text.
@@ -144,29 +144,81 @@ header, main {
 }
 ```
 
+## An alternative layout
+
 Now we are going to completely change the layout.
 We want to arrange the menu as a sidebar on the right hand side and stack it vertically.
 
-First, use [flexbox](http://flexbox.malven.co/) to stack the `a` elements in the `nav` vertically.
+First, use [flex-direction](http://flexbox.malven.co/) to stack the `a` elements in the `nav` vertically.
 Your menu should still appear above the main element and take the full width of the viewport.
 
-Set the `width` of the `nav` element to 15 percent and set the `width` of the `main` element to 85 percent. Use `vw` units (1vw is 1% of the viewport's width).
-Now their should be room for the elements to sit next to each other.
+Set the `width` of the `nav` element to 15vw and set the `width` of the `main` element to 85vw (1vw is 1% of the viewport's width).
+Now there should be room for the elements to sit next to each other.
 
 If you have not yet done so, consider adding some left/right padding to keep the paragraph text away from the edge of the main element.
 
 > Warning: Any left/right padding on either element will increase their width and so will cause the `main` element to wrap below the `nav`
 > This can be fixed by setting the `box-sizing` property to `border-box` so the given width *includes* the padding.
 
-Now, we need to take the `nav` element out of the normal flow by setting its `float` property to `right`.
+Now, we need to take the `nav` element out of the normal flow.
+First, we will do this by setting its `float` property to `right`.
 This moves the `nav` to the right-hand edge of its container (in this case, the `body` element) and causes other elements to wrap around it.
 
 You should see the main and nav elements squeeze onto one row.
 If your site does not do this, speak to your tutor to find out why.
 
+## Try using flexbox to achieve a similar result
+
+Remove the `float: right` rule from the `nav` ruleset.
+Your `main` and `nav` elements should be each on their own row.
+
+To use flexbox, we will need to adjust the structure of the HTML because flexbox needs to be applied to the containing element.
+We can't set the `display` property of the `body` element because this would organise the header too (though you could try using `flex-wrap` for this).
+
+Convert your `main` element into a `section` element and wrap the `nav` and the `section` in a new `main` element.
+
+```html
+<main>
+	<nav>
+		<a href="#">Home</a>
+		<a href="#">Blog</a>
+		<a href="#">Gallery</a>
+		<a href="#">Contact</a>
+		<a href="#">About</a>
+	</nav>
+	<section>
+		<p>
+			Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+			Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+			Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+			Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+		</p>
+	</section>
+</main>
+```
+
+Now in your CSS file, change the selector of the `main` ruleset to `section`.
+Also adjust your `overflow: auto` ruleset so it applies to sections too.
+This should bring you back to a roughly similar looking page.
+
+Now add a ruleset for `main` and make it `display: flex`.
+You should see the menu and section are lined up horizontally.
+
+You can remove the `width` rules or adjust them.
+
+By default, flex items will shrink to fit (if they can).
+In this case there is plenty of scope for the `section` to shrink.
+Notice that the `nav` will stop shrinking when it hits the size of the longest link.
+We can stop the `nav` from shrinking by adding `flex-shrink: 0` to its ruleset.
+This will force it to obey any `width` (or better, `flex-basis`) rules you give it.
+
+Notice that the order in the HTML is determining the order within the flex container.
+This can be overcome in two main ways.
+Either set the `order` property of the `nav` to `2` or set the `flex-direction` property of the `main` to `row-reverse`;
+
 ## Add a simple JavaScript interaction
 
-We will end with a bit more javascript.
+We will end with a bit more JavaScript.
 We want to write some code that will be triggered when a particular event fires.
 In this case we will handle the `click` event of an element.
 

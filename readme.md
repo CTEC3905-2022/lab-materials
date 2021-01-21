@@ -1,5 +1,9 @@
 # CTEC3905 lab materials
 
+| HTML | CSS | Javascript |
+|:----:|:---:|:----------:|
+| <img src="images/html.svg" alt="HTML5 logo" width="100%"> | <img src="images/css.svg" alt="CSS3 logo" width="100%"> | <img src="images/js.svg" alt="Javascript logo" width="100%"> |
+
 This is a repository which contains exercises to be followed in lab sessions.
 
 As a github repository this is easy to update, even within a lab session.

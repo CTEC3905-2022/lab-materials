@@ -15,3 +15,5 @@ If you find any mistakes or have any suggestions then please report them to your
 ([source](lab-02.md))
 - [Lab 3: Introduction to GIT and GitHub](https://ctec3905-2020-21.github.io/lab-materials/lab-03.html)
 ([source](lab-03.md))
+- [Lab 4: A responsive menu](https://ctec3905-2020-21.github.io/lab-materials/lab-04.html)
+([source](lab-04.md))

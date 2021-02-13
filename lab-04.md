@@ -1,4 +1,4 @@
-# Exercise 04-lab: breakpoints and a mobile menu
+# Exercise 04-lab: A responsive menu
 
 This week we will create a responsive menu.
 We will be using **media queries** to change our layout at different viewport widths.

@@ -15,6 +15,7 @@ In the `head` element, add the following `meta` tag.
 ```
 
 This will enable mobile browsers to recognise that your site is optimised for all devices.
+See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Viewport_meta_tag) for more details.
 
 The browser developer tools panel allows you to control the size of your viewport.
 You can do this by either increasing the width of the panel or you can activate the [*device toolbar*](https://developers.google.com/web/tools/chrome-devtools/device-mode/#viewport) by clicking on the icon or using `ctrl+shift+m`.
@@ -272,6 +273,7 @@ See how the `#menuToggler` element itself is constructed from three `div` elemen
 
 ## Links and resources
 
+- [Viewport met tag](https://developer.mozilla.org/en-US/docs/Web/HTML/Viewport_meta_tag)
 - [CSS selectors (MDN)](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Selectors)
 - [JS ES6 arrow functions (basic syntax)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions#Basic_Syntax)
 - [JS classList: see “Examples” for “toggle” (MDN)](https://developer.mozilla.org/en-US/docs/Web/API/Element/classList)

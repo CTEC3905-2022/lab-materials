@@ -247,7 +247,7 @@ Now expand your site above the break point and see that the new styles have brok
 Fix it by setting the `nav` to `position: static` and `transform: translateX(0)` within the media query.
 If you set the `nav` element height then you will also need to return it to `auto`.
 
-## Experiment with `transform`
+## Experiment with transform
 
 The [`transform`](https://developer.mozilla.org/en-US/docs/Web/CSS/transform) property is really useful for manipulating the position, shape and/or size of an element.
 In this case, we use `transform: translateX(100vw)` to locate the menu off the side of the viewport and to have it animate back into the viewport when the menu is `open`.
@@ -259,7 +259,8 @@ Read about the [`transform`](https://developer.mozilla.org/en-US/docs/Web/CSS/tr
 
 ## A more detailed example
 
-Look at the example code from this weeks video on responsive design.
+Look at the [example code](https://github.com/CTEC3905-2020-21/responsive-design-demos) from this weeks video on responsive design.
+In particular, the menu toggler on the [kitten example](https://ctec3905-2020-21.github.io/responsive-design-demos/demo/) page at mobile size.
 
 See how the `#menuToggler` element itself is constructed from three `div` elements and animated using the `transform` property.
 

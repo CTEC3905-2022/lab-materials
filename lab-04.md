@@ -208,7 +208,7 @@ nav {
   position: fixed;
   width: 100%;
   top: 0;
-  transform: translateX(100vh);
+  transform: translateX(100vw);
   transition: 0.5s;
 }
 

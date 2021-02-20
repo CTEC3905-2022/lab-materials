@@ -128,10 +128,10 @@ main section {
   }
 }
 
-@media screen and (min-width: 1000px) {
+@media screen and (min-width: 900px) {
   header, main section {
-    padding: 1em 200px;
-  }
+		padding: 1em 25vw;
+	}
 }
 
 ```

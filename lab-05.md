@@ -273,7 +273,7 @@ We also give it some width and set its `height` property to be equal to our cust
 #heightTarget {
   position: absolute;
   bottom: 0;
-  right: 0;
+  right: 1em;
   width: 4em;
   background-color: hsl(0, 70%, 40%);
   height: var(--height);

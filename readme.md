@@ -17,3 +17,5 @@ If you find any mistakes or have any suggestions then please report them to your
 ([source](lab-03.md))
 - [Lab 4: A responsive menu](https://ctec3905-2020-21.github.io/lab-materials/lab-04.html)
 ([source](lab-04.md))
+- [Lab 5: Getting user input](https://ctec3905-2020-21.github.io/lab-materials/lab-05.html)
+([source](lab-05.md))

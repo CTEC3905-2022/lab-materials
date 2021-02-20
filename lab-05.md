@@ -321,7 +321,8 @@ First, we add some new css custom properties for foreground colour and backgroun
 }
 ```
 
-Then create styles for a new `#colours` element which use the custom properties.
+Then we create styles for a new `#colours` element which will use the custom properties.
+So if we change the custom properties, we change the element colours.
 
 ```css
 #colours {
@@ -344,7 +345,7 @@ Now, add a new `<section>` into your document.
 
 Notice the use of a <br> tag to aid with formatting.
 
-Finally, add the necessary JavaScript event listeners to activate the `<input>` elements.
+Finally, add the necessary JavaScript event listeners to activate the new `<input>` elements.
 
 ```js
 myBG.addEventListener('input', ev => {
@@ -355,6 +356,10 @@ myFG.addEventListener('input', ev => {
 });
 
 ```
+
+The result should be as expected.
+We can select a foreground or background colour with the new inputs.
+As we change the input values, the section changes colour.
 
 ## Using forms
 
@@ -375,7 +380,7 @@ Create a simple login form as follows.
 </section>
 ```
 
-### Using grid layout
+### A grid layout
 
 As a basic example of grid layout we will use `display: grid` to format the form.
 This particular approach requires that all elements (except `<h2>` and inputs with `type="submit"` elements) come as `<label>`, `<input>` pairs.
@@ -398,14 +403,15 @@ form input[type="submit"] {
 ```
 
 Try to understand what is going on.
-The grid has two columns, one is `minmax(max-content, 1fr)` and the other in `3fr`.
-This ensures the first column never wraps the "confirm password" label and the grid generally gives the second column more space.
+The grid has two columns (set by `grid-template-columns`), one is `minmax(max-content, 1fr)` and the other is `3fr`.
+This ensures the first column never wraps the "confirm password" label (is is at least `max-content` wide) and the grid generally gives the second column three times more space.
 We also customised the placing of the `<h2>` to span both columns and the `type="submit"` `<input>` to align right within the second column.
 For more information about grid layouts see Jen Simmons' [Layout land](https://www.youtube.com/channel/UC7TizprGknbDalbHplROtag) youTube channel.
 
 ### Validation styles
 
-Notice that our input elements are invalid (because they are `required`) and are styled pretty badly.
+Notice that our input elements are invalid (because they are `required`).
+The invalid styles are pretty bad, lets improve them.
 
 Update the `:invalid` styles like this.
 
@@ -453,7 +459,7 @@ Currently, the form will submit even if the password confirmation field doesn't 
 This is not OK.
 
 We need custom logic to do the test.
-We can use the `setCustomValidity` method on the confirmation field  to set the field to be invalid.
+We can use the [`setCustomValidity`](https://developer.mozilla.org/en-US/docs/Web/API/HTMLSelectElement/setCustomValidity) method on the confirmation field to set the field to be invalid.
 
 ```js
 const checkConfirmation = ev => {

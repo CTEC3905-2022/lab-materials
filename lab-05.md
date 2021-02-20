@@ -205,10 +205,10 @@ What if we need to restrict it to a (generous) maximum value of 150?
 
 Easy! Just add a `max` attribute.
 Set the `max` attribute to "150".
-Notice that is doesn't prevent you from entering a larger number directly, but it does prevent using the arrow keys or mouse controls to increase the value beyond the provided maximum.
+Notice that it doesn't prevent you from entering a larger number directly, but it does prevent using the arrow keys or mouse controls to increase the value beyond the provided maximum.
 
 A value greater than 150 also sets the pseudo-class `:invalid` which we can target with a css ruleset.
-Add the following t your CSS:
+Add the following to your CSS:
 
 ```css
 input:invalid {

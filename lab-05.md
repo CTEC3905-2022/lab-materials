@@ -309,7 +309,7 @@ Every time the `<input>` element steps to the next value, the `input` event is t
 ### Colours
 
 The colour `<input>` works exactly the same.
-In the following example, notice how the code is almost identical to the avove example.
+In the following example, notice how the code is almost identical to the above example.
 
 First, we add some new css custom properties for foreground colour and background colour.
 

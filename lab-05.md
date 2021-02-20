@@ -83,6 +83,7 @@ Notice, I've also added a unicode magnifying glass into the search input placeho
         <input id="myName">
       </section>
     </main>
+    <script src="scripts.js"></script>
   </body>
 </html>
 ```
@@ -284,6 +285,8 @@ We also give it some width and set its `height` property to be equal to our cust
 This setup will allow us to vary the height by setting the value of the custom property.
 We will do this with a simple event listener on the `input` event of our `<input>` element.
 The `input` event fires whenever the value is updated.
+
+Add the following to your script.
 
 ```js
 "use strict";

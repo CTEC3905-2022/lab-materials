@@ -462,7 +462,7 @@ We need custom logic to do the test.
 We can use the [`setCustomValidity`](https://developer.mozilla.org/en-US/docs/Web/API/HTMLSelectElement/setCustomValidity) method on the confirmation field to set the field to be invalid.
 
 ```js
-const checkConfirmation = ev => {
+const checkConfirmation = (ev) => {
  if (myPassword.value != myConfirmation.value) {
   myConfirmation.setCustomValidity("Wait. What? This doesn't match the password field!");
  } else {
@@ -501,7 +501,7 @@ Notice that only the fields with the `name` attribute set are being submitted.
 
 ## Additional exercise
 
-IF you have got this far, look up [HTML data attributes](https://developer.mozilla.org/en-US/docs/Learn/HTML/Howto/Use_data_attributes) and think about how you could implement a simple search function using the existing search input.
+If you have got this far, look up [HTML data attributes](https://developer.mozilla.org/en-US/docs/Learn/HTML/Howto/Use_data_attributes) and think about how you could implement a simple search function using the existing search input.
 Try to add data attributes to each section and use the search input to filter the visible sections.
 
 ## Lab learning outcomes

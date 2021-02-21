@@ -15,7 +15,6 @@ Add a `<span>` element before your `<input>` and add the text "enter your name: 
 <img src="images/basic-input.png" alt="A basic input" width="70%" style="display: block; margin: 1em auto 0 auto">
 <figcaption style="text-align: center; margin-bottom: 1em">A standard way to get user input</figcaption>
 
-
 ## Accessibility
 
 Well done, but we have a problem.
@@ -510,16 +509,19 @@ Try to add data attributes to each section and use the search input to filter th
 - handle user input with JavaScript
 - Use CSS custom properties
 - Reflect user input directly on the page without reloading
-- Use `<form>` fields
-- Understand form validation
+- Use `<form>` fields and form validation
 
 Input fields are the primary method for getting user data, so it is essential to choose the correct type, depending on what you want the user to enter. Handling these on the page with JavaScript and providing feedback without (or before) calling any server scripts or reloading the page is one of the *key elements of modern web development*.
 
 Manipulating the Document Object Model (DOM) in this way avoids excessive to-and-fro messages between the client (browser) and the web server, making user interaction more immediate and intuitive. If you use local storage (in a future lab) to retain user preferences between browser sessions, their choices can be made to persist in that user’s browser.
 
-## references
+## References
 
+ - [viewport meta tag](https://developer.mozilla.org/en-US/docs/Web/HTML/Viewport_meta_tag#viewport_basics)
  - [WebAim](https://webaim.org/techniques/forms/controls)
  - [HTML input element](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input)
  - [CSS custom properties](https://developer.mozilla.org/en-US/docs/Web/CSS/--*)
  - [Layout land](https://www.youtube.com/channel/UC7TizprGknbDalbHplROtag)
+ - [HTML forms](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/form)
+ - [setCustomValidity](https://developer.mozilla.org/en-US/docs/Web/API/HTMLSelectElement/setCustomValidity)
+ - [HTML data attributes](https://developer.mozilla.org/en-US/docs/Learn/HTML/Howto/Use_data_attributes)

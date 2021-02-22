@@ -342,7 +342,7 @@ Now, add a new `<section>` into your document.
 </section>
 ```
 
-Notice the use of a <br> tag to aid with formatting.
+Notice the use of a `<br>` tag to aid with formatting.
 
 Finally, add the necessary JavaScript event listeners to activate the new `<input>` elements.
 

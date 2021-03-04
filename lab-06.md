@@ -1,4 +1,4 @@
-# Lab 6: A todo list application
+# Lab 6: Working with data
 
 In the following lab exercises, we will learn how to create, insert and remove DOM nodes.
 We will also work with the browser’s local storage data store.

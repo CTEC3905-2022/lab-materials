@@ -19,3 +19,5 @@ If you find any mistakes or have any suggestions then please report them to your
 ([source](lab-04.md))
 - [Lab 5: Getting user input](https://ctec3905-2020-21.github.io/lab-materials/lab-05.html)
 ([source](lab-05.md))
+- [Lab 6: Working with data](https://ctec3905-2020-21.github.io/lab-materials/lab-06.html)
+([source](lab-06.md))

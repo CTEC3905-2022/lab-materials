@@ -1,371 +1,741 @@
-# Lab 6: Shopping list application
+# Lab 6: A todo list application
 
-Last week’s exercise demonstrated how to manipulate the Document Object Model (DOM) after receiving user input. This week, you will learn how to store and retrieve data to/from the browser’s local storage data store, to be retained between between browser sessions and used on multiple pages. Think of it as an insecure but 'free' and server-less data store (Chrome has a 5MB limit, whereas cookies can store far less than even 1MB).
+In the following lab exercises, we will learn how to create, insert and remove DOM nodes.
+We will also work with the browser’s local storage data store.
+
+In this example, we will build a todo list application.
+The basic functional requirements are as follows:
+
+- Users can add items to the list
+- Users can mark list items as **done**
+- Users can remove items from the list
+- Users can clear the entire list
+- List items and their **done** state will be remembered by the browser
+
+Take this lab slowly and try to understand each step.
+We are integrating a lot of stuff we have already learned and adding new stuff too.
+
+Ask questions as soon as they arise.
+Don't continue to the next step until you understand the current step.
 
 ## Build a list
 
-First we will get a very basic list working so we can add items to our list using javascript code.
+First we will need a list in our document.
+Start with a standard template and add a simple `<header>` containing an `<h1>` and a `<main>` element containing a single `<ul>` (an [unordered list][ulElement]).
+This will become the core of our todo list.
 
-We start with a blank template and add a simple header and a single [unordered list element][ulElement] (use an ordered list if you want numbering).
-This list element will become our shopping list.
-The list is given the id `shopping` so we can select it by id.
+> use an `<ol>` element (ordered list) if you want numbering.
 
 ```html
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Shopping list</title>
-  <link rel="stylesheet" href="css/styles.css">
-</head>
-<body>
-  <header>
-    <h1>Shopping list</h1>
-  </header>
-  <ul id="shopping"></ul>
-  <script src="js/shopping.js"></script>
-</body>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo list</title>
+    <link rel="stylesheet" href="todo.css">
+  </head>
+  <body>
+    <header>
+      <h1>Todo list</h1>
+    </header>
+    <main>
+      <ul id="todo"></ul>
+    </main>
+    <script src="todo.js"></script>
+  </body>
 </html>
 ```
+> The list is given the id `todo` so we can conveniently access it in JavaScript.
 
-## Adding items
+## Adding list items
 
-Now in the linked file `js/shopping.js` we can get a handle to the list and write a simple function to add items to the list.
+In our finished app we want [list item][li] elements (`<li>`) to be created via JavaScript in response to user input.
+Before we move on to the JavaScript we should spend some time designing the list items.
 
-```Javascript
-const listElement = document.getElementById('shopping');
+### Start with a *hard-coded* list
 
-function addItem(item) {
-  const itemElement = document.createElement('li');
-  itemElement.textContent = item;
-  listElement.appendChild(itemElement);
-};
+Our first iteration will be hard-coded into the HTML and very minimal.
+Each element will only contain a description of the `todo` item.
+Just some text.
 
-```
-
-The function uses [`document.createElement`][createElement] to create an [`li`][li] element.
-It places text in the element using [`node.textContent`][textContent] and finally inserts our new element into the DOM using [`node.appendChild`][appendChild].
-
-We can now add items by calling our function. Try this in the console.
-
-```Javascript
-addItem('rice');
-addItem('pasta');
-```
-
-We can also add multiple items from an array using [`Array.prototype.forEach`][forEach].
-This is a method available on all arrays, it takes a callback function as an argument.
-Each item of the array is passed in turn as an argument into the callback function.
-
-
-```Javascript
-const list = ['rice', 'pasta', 'tea', 'coffee'];
-list.forEach(item => {
-  addItem(item);
-});
-```
-
-[`Array.prototype.forEach`][forEach] is useful for conducting arbitrary operations.
-The argument (`item` in this case, but any name is allowed) is set to the value of each element in turn.
-In this case, we simply call the `addItem` method with each item in the list.
-So `addItem` is called four times, once for each value.
-
-## Clearing the list
-
-We need a function to clear the entire list.
-We could do this by replacing the content of the list element with an empty string.
-
-```Javascript
-function clearList() {
-  listElement.innerHTML = "";
-}
-```
-
-However, its more efficient to loop over the DOM and remove each element in turn.
-
-```Javascript
-function clearList() {
-  while(listElement.firstChild) {
-    listElement.removeChild(listElement.firstChild);
-  }
-}
-```
-
-Using a [`while` loop][while] we call [`Node.firstChild`][firstChild] to identify the next element and [`Node.removeChild`][removeChild] to remove each element in turn.
-
-Calling this function in the console now clears the list as expected.
-
-Finally, tidy up the whole lot by wrapping the list generation code in a reusable function.
-
-```Javascript
-function renderList(list) {
-  list.forEach(item => {
-    addItem(item);
-  });
-}
-```
-
-We will use this later to load data from local storage.
-
-In your javascript file you should now have one variable declaration (`listElement`) and three functions (`addItem()`, `clearList()` and `renderList()`).
-
-## Add some interaction
-
-Now we have the tools to add items and clear the list, we need to build a simple user interface.
-
-Above the list, add an input element with `id="newItem"` and placeholder "new item" and a button with `id="addBtn"` and "add" as the content.
+Insert a series of `<li>` elements into your `<ul>` element to remind us to keep up to date with module activities.
 
 ```html
-<input placeholder="new item" id="newItem">
-<button id="addBtn">add</button>
+<ul id="todo">
+  <li>Study learning materials</li>
+  <li>Complete lab exercises</li>
+  <li>Attend lab sessions</li>
+  <li>Conduct self-directed research</li>
+  <li>Ask questions</li>
+</ul>
 ```
 
-Below the list, add a button with `id="clearBtn"` and "clear" as the content.
+Now we should style it a bit to put our basic *look and feel* in place for mobile devices.
 
-```html
-<button id="clearBtn">clear</button>
-```
+Apply the following style rules.
+Adapt this if you like, but be careful.
+We will be building on top of these styles.
 
-Wrap the list and these new elements in a `main` element.
-Your `index.html` file should now look like this.
-
-```html
-<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Shopping list</title>
-  <link rel="stylesheet" href="css/styles.css">
-</head>
-<body>
-  <header>
-    <h1>Shopping list</h1>
-  </header>
-  <main>
-    <input placeholder="new item" id="newItem">
-    <button id="addBtn">add</button>
-    <ul id="shopping"></ul>
-    <button id="clearBtn">clear</button>
-  </main>
-  <script src="js/shopping.js"></script>
-</body>
-</html>
-```
-
-We need to create JavaScript handles to our new elements.
-Add these new lines to the top of the file.
-
-```Javascript
-const newItem = document.getElementById('newItem');
-const addBtn = document.getElementById('addBtn');
-const clearBtn = document.getElementById('clearBtn');
-```
-
-Now we can add a simple event listener (using [`addEventListener`][addEventListener]) to our 'add' button to insert a new element into our list based on the input value.
-
-Our first version of the event listener can be added at the bottom of the file.
-
-```Javascript
-addBtn.addEventListener('click', ev => {
-  addItem(newItem.value);
-});
-```
-
-Type some text into the input and click the add button. This works pretty well but it has some problems.
-
-- What happens when the input is blank?
-- What happens when we click the add button more than once?
-
-We need to add a few lines of code to smooth out this interaction.
-
-First, we check that the input has some text and only add the item if it does.
-
-```Javascript
-addBtn.addEventListener('click', ev => {
-  if(newItem.value) { //<- this
-    addItem(newItem.value);
-  } //<- and this
-});
-```
-
-Try it. No more blank entries in our list. Great. But we still add the same value multiple times when we click the button more than once.
-
-So we clear the input by setting its value to `null` each time an item is successfully added to the list.
-
-```Javascript
-addBtn.addEventListener('click', ev => {
-  if(newItem.value) {
-    addItem(newItem.value);
-    newItem.value = null; //<- this
-  }
-});
-```
-
-To clear the whole list we add an event listener to the clear button.
-
-```Javascript
-clearBtn.addEventListener('click', ev => {
-  clearList();
-});
-```
-
-Try it.
-We now have a very basic working list.
-
-## Removing individual items
-
-The list is becoming useful but what if we make a mistake and want to remove an item from the list without starting from scratch?
-
-We need a way to select an individual item for removal. For this, we need a button on each item. So we need to modify our `addItem` function.
-
-```Javascript
-function addItem(item) {
-  const itemElement = document.createElement('li');
-  itemElement.textContent = item;
-  const deleteButton = document.createElement('button'); // <- new
-  deleteButton.textContent = 'x';                        // <- new
-  itemElement.appendChild(deleteButton);                 // <- new
-  listElement.appendChild(itemElement);
-};
-```
-
-We have created a new button for each element and appended it to the list item.
-When we add new items, they now also contain a button which we will use to delete the individual list item.
-
-We need the new button to delete the entire `li` element. For this we use a closure.
-We add an event listener to each button which removes the parent element from the list.
-
-```Javascript
-function addItem(item) {
-  const itemElement = document.createElement('li');
-  itemElement.textContent = item;
-  const deleteButton = document.createElement('button');
-  deleteButton.textContent = 'x';
-  itemElement.appendChild(deleteButton);
-  deleteButton.addEventListener('click', ev => { // <- new
-    listElement.removeChild(itemElement);        // <- new
-  });                                            // <- new
-  listElement.appendChild(itemElement);
-};
-```
-
-The closure means that the event listener will always have a reference to `itemElement`.
-Even after the `addItem` function has completed, the scope it created, including the `const itemElement` is available to the `deleteButton` event listener.
-
-## Tidy up the look and feel
-
-At this point you may want to add some styles.
-Begin with something like this.
+> Notice we used different filenames this time, just to mix it up.
+Make sure your file is called `todo.css`
 
 ```css
-body {
-  max-width: 500px;
-  margin: auto;
+@import url('https://fonts.googleapis.com/css2?family=Nunito&display=swap');
+
+:root {
+  --hue: 20;
+  --dark: hsl(var(--hue), 80%, 50%);
+  --light: hsl(var(--hue), 80%, 90%);
 }
-ul {
-  padding: 1em 0;
+
+body {
+  font-family: Nunito, sans-serif;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+header {
+  background-color: var(--dark);
+  color: var(--light);
+  overflow: auto;
+  padding: 0.5rem;
+}
+
+h1 {
   margin: 0;
 }
+
+
+ul {
+  list-style: none;
+  user-select: none;
+  padding: 0;
+  margin: 0;
+}
+
 li {
+  padding: 1em 0.5rem;
+  margin: 0;
+  border: 0px solid var(--dark);
+}
+
+li:nth-child(odd) {
+  background-color: var(--light);
+  border-width: 0.5px 0;
+}
+
+```
+
+<img src="images/todo-1.png" alt="A styled list" width="70%" style="display: block; margin: 1em auto 0 auto">
+<figcaption style="text-align: center; margin-bottom: 1em">A styled list</figcaption>
+
+
+Notice the use of custom properties, choose a different `--hue` if you want (0 - 360).
+You may need to tweak the colour contrast a bit.
+
+Also notice the use of `user-select: none`, this prevents the text within our list from being selected.
+This will become useful later when users are clicking on elements.
+
+### Adding new items
+
+Now we need to implement our first functional requirement **Users can add items to the list**.
+
+First, we will create a JavaScript function that will add a new list item.
+
+```js
+"use strict";
+
+function addItem(text) {
+  const item = document.createElement('li');
+  item.textContent = text;
+  todo.appendChild(item);
+}
+```
+
+The function takes a single argument, `text`.
+This is the text we want to add into the list item.
+
+We are calling [`document.createElement`][createElement] to create an [`<li>`][li] element.
+Then we add the text into the `<li>` using [`node.textContent`][textContent].
+Finally, we append our new element as a child of the `<ul>` element (the one with `id="todo"`) using [`node.appendChild`][appendChild].
+
+Now try calling the new function.
+In the developer console, type the following:
+
+> don't add this code into your file, type it into the chrome developer console and see what it does
+
+```js
+addItem("Pay attention to the details");
+```
+> Stop and think.
+Make sure you understand what is happening here.
+Ask a question if you need clarification.
+
+Your new item should have been added to the list.
+All we need now is a way for the user to input text and an event listener to call the function.
+
+Add the following `<section>` into the `<main>` element, above the `<ul>`.
+
+```html
+<section>
+  <input id="text" placeholder="new todo" aria-label="new todo">
+  <button id="add">add</button>
+</section>
+```
+
+> This should be familiar from the last lab.
+Its just an `<input>` and a `<button>`.
+
+We need some additional styles to handle this.
+
+```css
+section {
   display: flex;
   justify-content: space-between;
 }
 
+input, button {
+  font-size: 1em;
+}
+
+button {
+  border: 1px solid var(--light);
+  background-color: var(--dark);
+  color: var(--light);
+}
 ```
 
-We position the body in the center of the page, overwrite the default `ul` padding and margin and justify the `<li>` element content using `display: flex` and `justify-content: space-between`.
-This will put the text on the left and the button on the right.
+and update the `header` selector.
 
-Add a few more styles if you like.
+```css
+header, section {
+  background-color: var(--dark);
+  color: var(--light);
+  overflow: auto;
+  padding: 0.5rem;  
+}
+```
 
-## Saving the list
+> By providing a comma-separated list of elements to the ruleset selector, the `<section>` and `<header>` elements are being given the same styles.
 
-We now have a fairly functional shopping list app. The only problem is that if we close the page or reload it the list data is lost and we begin with a blank list each time.
 
-We will load the list from [local storage][localStorage] on opening the page and save the list back to local storage on closing the page.
+<img src="images/todo-2.png" alt="List with basic user input" width="70%" style="display: block; margin: 1em auto 0 auto">
+<figcaption style="text-align: center; margin-bottom: 1em">List with basic user input</figcaption>
 
-First, we need to save the list to local storage.
-We do this in an event listener we add to the window event handler [`onbeforeunload`][onbeforeunload] event.
-This even will fire when the window is about to unload its resources in preparation to close the page.
 
-```Javascript
-window.addEventListener('beforeunload', ev => {
-  const items = [...listElement.childNodes];
-  if(items.length) {
-    const list = items.map(item => {
-      return item.textContent.slice(0, -1);
-    });
-    localStorage.setItem('shopping-list', list);
-  } else {
-    localStorage.removeItem('shopping-list');
+Finally, we need an event listener on the new `<button>`.
+
+```js
+add.addEventListener('click', ev => {
+  addItem(text.value);
+});
+```
+
+In the first draft of our app our user can add items by typing something into the `<input>` and clicking the `add` button.
+Refreshing the page returns us back to the original hard-coded list.
+
+### Marking an item as *done*
+
+Storing a boolean *done* field in the DOM can be implemented in many ways.
+However, by using a `<label>` with an `<input>`, we get some free accessibility and can easily leverage css to provide the user interface.
+
+First, let's design the DOM structure we need.
+Update the list items as follows.
+
+```html
+<ul id="todo">
+  <li>
+    <label for="todo1">Study learning materials</label>
+    <input type="checkbox" id="todo1">
+  </li>
+  <li>
+    <label for="todo2">Complete lab exercises</label>
+    <input type="checkbox" id="todo2">
+  </li>
+  <li>
+    <label for="todo3">Attend lab sessions</label>
+    <input type="checkbox" id="todo3">
+  </li>
+  <li>
+    <label for="todo4">Conduct self-directed research</label>
+    <input type="checkbox" id="todo4">
+  </li>
+  <li>
+    <label for="todo5">Ask questions</label>
+    <input type="checkbox" id="todo5">
+  </li>
+</ul>
+```
+> Notice that each `<li>` element is structured identically.
+Later on, we will build the structure with code.
+
+Now we can mark the item as `done` by checking the input.
+
+Update the styles to make the list items `display: flex` and `justify-content: space-between`.
+
+```css
+li {
+  padding: 1em 0.5rem;
+  margin: 0;
+  border: 0px solid var(--dark);
+  display: flex;
+  justify-content: space-between;
+}
+```
+
+Now we can click on the label and the box is toggled.
+However, the gap between the label and the input is not clickable.
+Fix this by growing the label element.
+
+```css
+label {
+  flex-grow: 1;
+}
+```
+
+<img src="images/todo-3.png" alt="List with checkboxes for marking as done" width="70%" style="display: block; margin: 1em auto 0 auto">
+<figcaption style="text-align: center; margin-bottom: 1em">List with checkboxes for marking as done</figcaption>
+
+Obviously, adding an item via the user interface still generates the old, simpler `<li>` structure.
+So we need to update our `addItem` function.
+
+```js
+function addItem(text, done) {
+  const item = document.createElement('li');
+  const label = document.createElement('label');
+  const input = document.createElement('input');
+  label.textContent = text;
+  input.type = "checkbox";
+  input.checked = done;
+  input.id = `todo${todo.querySelectorAll('li').length + 1}`;
+  label.htmlFor = input.id;
+  item.appendChild(label);
+  item.appendChild(input);
+  todo.appendChild(item);
+}
+```
+
+Study the above function carefully.
+We are generating a nested structure of elements and configuring the elements with the data provided to the function arguments.
+The label and input elements are linked together by a unique identifier constructed by counting how many elements are in the list.
+
+The system now works as we want.
+New items are given an empty checkbox.
+Try calling the function from the developer console and pass in `true` as the second argument.
+
+> Again, don't add this code into your javascript file.
+This should be tried in the developer console.
+
+
+```js
+addItem("Pay attention to the details", true);
+```
+
+This should tick the box.
+
+<img src="images/todo-4.png" alt="New items can be added with the checkbox checked" width="70%" style="display: block; margin: 1em auto 0 auto">
+<figcaption style="text-align: center; margin-bottom: 1em">New items can be added with the checkbox checked</figcaption>
+
+Refreshing the page still reverts the list back to the original hard-coded items.
+
+### Removing items from the list
+
+To remove an item from the list requires a clickable element within each list item.
+We are going to use a `<button>` to do this job.
+
+However, we also need to add an event listener to each of these button elements.
+The event listener must know which item to remove from the list.
+So this time, we will start by updating the `addItem` function with the following additional code.
+
+> Insert this code into your `addItem` function.
+
+```js
+const button = document.createElement('button');
+button.textContent = "×";
+button.addEventListener('click', ev => {
+  item.remove();
+});
+item.appendChild(button);
+```
+
+>Try to think about how you would organise the function, it will get a lot longer before we are finished.
+Make sure you add these lines after the `item` element is created.
+
+The above code adds a button into the list item.
+The button is also given an event listener which deletes the list item from the DOM when the button is clicked.
+Try it.
+Add an item via the interface and click the button in the new item.
+You should see it works as intended.
+
+>The event listener is forming what is known as a closure - the value of the `item` variable becomes part of the context of the event listener and remains part of the event listener scope even after the original `additem` function call ends.
+
+However, add a new element and you will see we have introduced a *visual bug*.
+The label, input checkbox and button together are not looking good.
+More importantly, the clickable elements are too close together for a good mobile interface.
+
+<img src="images/todo-5.png" alt="Controls are too close together" width="70%" style="display: block; margin: 1em auto 0 auto">
+<figcaption style="text-align: center; margin-bottom: 1em">Controls are too close together</figcaption>
+
+> For touch interfaces think about the size of a large fingertip.
+
+One solution is to hide the checkbox.
+We can keep the checkbox in the document, but we will hide it using css.
+This is OK because the label can still be used to toggle the hidden checkbox.
+
+```css
+input[type="checkbox"] {
+  display: none;
+}
+
+input:checked + label {
+  text-decoration: line-through;
+}
+```
+
+Notice, we have also used the
+[adjacent sibling combinator](https://developer.mozilla.org/en-US/docs/Web/CSS/Adjacent_sibling_combinator)
+to select all labels that **follow** checked inputs.
+We style these with a line-through to indicate they are "done".
+
+Think about this for a while.
+The labels need to come after the inputs in the DOM.
+It means we need to swap the order of the inputs and the labels.
+
+So in the `addItem` function, swap the elements around.
+Append the input first, then the label.
+
+>You should already have these lines, just swap the order
+
+```js
+item.appendChild(input);
+item.appendChild(label);
+```
+
+You can also swap the order of the elements in the HTML file.
+
+>Swap them, do it.
+Go to your HTML file and swap the order of the labels and inputs.
+
+Notice that if you do this then clicking the label will visibly mark the item as "done".
+
+<img src="images/todo-6.png" alt="Cleaner interface with line-through instead of checkbox" width="70%" style="display: block; margin: 1em auto 0 auto">
+<figcaption style="text-align: center; margin-bottom: 1em">Cleaner interface with line-through instead of checkbox</figcaption>
+
+Now, for newly added items at least, we can delete the item from the list with a click.
+Leave them for now but in our final app, we will remove the hard-coded items.
+
+### Clearing the entire list
+
+Deleting all the elements in the list requires a clickable element for the user.
+Add a `<footer>` with a `<button>` like this after your `<main>` element.
+
+```html
+<footer>
+  <button id="clear">Clear entire list</button>
+</footer>
+```
+
+We can add the footer into the `header, section` selector to get some free styles.
+
+>Hey this is nice, we can re-use existing styles without creating a mess
+
+```css
+header, section, footer {
+  background-color: var(--dark);
+  color: var(--light);
+  overflow: auto;
+  padding: 0.5rem;  
+}
+```
+
+<img src="images/todo-7.png" alt="Clear button in the footer" width="70%" style="display: block; margin: 1em auto 0 auto">
+<figcaption style="text-align: center; margin-bottom: 1em">Clear button in the footer</figcaption>
+
+The JavaScript requirements are pretty minimal.
+
+```js
+function clearList() {
+  while(todo.firstChild) {
+    todo.removeChild(todo.firstChild);
+  }
+}
+
+clear.addEventListener('click', ev => {
+  clearList();
+});
+```
+
+Using a [`while`][while] loop we call [`Node.firstChild`][firstChild] to identify the next element and [`Node.removeChild`][removeChild] to remove each element in turn.
+[`Node.firstChild`][firstChild] will return false if there are no child elements.
+
+Now the interface is nearly complete.
+Although still, refreshing the page causes all our updates to be lost.
+Before we store the list in local storage, we can add a few refinements.
+
+### Refinements
+
+There are a few issues with the user interface we need to improve.
+
+- Clicking the add button when the text input field is empty should do nothing
+- Once an item is added, the text input field should be cleared and be given the focus
+- Pressing enter should trigger the item to be added
+
+We can address the first two points easily.
+Setting the input value to `null` clears the field.
+Calling [`text.focus()`](https://developer.mozilla.org/en-US/docs/Web/API/HTMLOrForeignElement/focus) places the cursor back in the input element ready for the next item to be added.
+
+>This is another update.
+You should already have this event listener.
+We are updating the existing code here.
+
+```js
+add.addEventListener('click', ev => {
+  if(text.value) {      // check we have data
+    addItem(text.value);
+    text.value = null;  // clear the input
+    text.focus();       // give it the focus
   }
 });
-
 ```
 
-Here we are extracting our item data from the DOM.
+To add an item when the enter key is pressed we can add an event listener on the input element listening for the [`keydown`](https://developer.mozilla.org/en-US/docs/Web/API/Document/keydown_event) event.
+We can test the `event.key` property and if it is `Enter` then we can trigger the add button `click` event.
 
-First, we convert the list child nodes to an array using the [spread operator][spread]. Then we check the length of the array. If the array is empty then we delete our local storage record.
-
-If the list contains data then we extract the item text into an array using the [Array.prototype.map][Array.prototype.map] function. We call [Node.textContent][textContent] and [String.prototype.slice][String.prototype.slice] on each list element within the callback.
-
-Our item text is contained within each list item element along with a delete button. Note that [Node.textContent][textContent] returns the concatenation of the [textContent][textContent] of every child node. So we get an extra 'x' from the delete button concatenated to the end of our string. We remove this with [String.prototype.slice][String.prototype.slice].
-
-## Loading the list
-
-With the list data from previous session stored in local storage we now just need to read these data back into the page when the page loads.
-
-For this, we add an event listener to the window event handler [DOMContentLoaded][DOMContentLoaded] event. This event fires once the DOM is completely loaded so we can be sure the list element will be available.
-
-```Javascript
-window.addEventListener('DOMContentLoaded', ev => {
-  const shoppingList = localStorage.getItem('shopping-list');
-  if(shoppingList) {
-    renderList(shoppingList.split(','));
+```js
+text.addEventListener('keydown', ev => {
+  if(ev.key == "Enter") {
+    add.click();
   }
 });
 ```
 
-We extract the data from local storage as a comma-separated string. To convert this to an array we use the [String.prototype.split][String.prototype.split] method and pass the resultant array into our `renderList()` function.
+Try it out.
+We can now add multiple items easily.
 
-Now the list will be remembered even if we close the page and open it again.
+## Enable local storage
 
-## Upgrade the interface
+To save our list to local storage we need to cover a number of situations.
 
-The list is nice and all but if you want to write a long list then you have to flip between using the keyboard to type and using the mouse to click. This is annoying and inefficient.
+- When the page is loaded, it should check the local storage for data
+- When a new item is added, it should update local storage
+- When an item is removed, it should update local storage
+- When an item is marked as done (or not done) it should update local storage
+- When the list is cleared, it should update local storage.
 
-The following code adds a handler for the input element `keyup` event. The `keyup` event fires when a key is released.
+### Data structure
 
-```Javascript
-newItem.addEventListener("keyup", ev => {
-  if (ev.keyCode === 13) {
-    addBtn.click();
+Local storage can only store strings.
+Typically this means we store data as [JSON](https://www.json.org/json-en.html).
+JSON can be converted into JavaScript objects using [`JSON.parse()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/parse).
+JavaScript objects can be converted into JSON using [`JSON.stringify()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify).
+
+We need two functions.
+One will strip the data to be stored from the DOM and save it to local storage as a string.
+The other will load the string from local storage and populate the DOM using our `clearList` and `addItem` functions.
+
+The data structure will be an Array of Objects, like this:
+
+```js
+[
+  {text: "Study learning materials", done: true},
+  {text: "Complete lab exercises", done: false},
+  {text: "Attend lab sessions", done: false},
+  {text: "Conduct self-directed research", done: false},
+  {text: "Ask questions", done: false}
+]
+```
+
+### Save data to storage
+
+We can strip this data out of the DOM like this.
+
+```js
+function saveToStorage() {
+	const elements = Array.from(todo.querySelectorAll('li'));
+	const data = elements.map(el => {
+		 return {
+       text: el.querySelector('label').textContent,
+			 done: el.querySelector('input').checked
+		 }
+	});
+	localStorage.setItem(todo.id, JSON.stringify(data));
+}
+```
+
+The `saveToStorage` function grabs all the `<li>` elements using [`Element.querySelectorAll`](https://developer.mozilla.org/en-US/docs/Web/API/Element/querySelectorAll) and converts this into an Array using [`Array.from`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/from).
+The [`Array.map`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map) function is perfect for transforming the array of elements into our data structure.
+We extract the label text and the input boolean value for each element into an object and `Array.map` converts the result into an array.
+Finally, we use [`localStorage.setItem()`](https://developer.mozilla.org/en-US/docs/Web/API/Storage/setItem) to store the data.
+We pass the data through `JSON.stringify` before storing it, using the list `id` attribute as a key.
+
+In the developer tools click on the `Application` tab.
+Under `Storage` you should see `Local Storage`.
+Open the `Local Storage` menu and select the item for your page (usually `file://`).
+This should reveal a table of data with columns for `key` and `value`.
+This is your local storage database.
+
+Now, in the console, call our `saveToStorage` function.
+
+>Again, don't put this in your file, just type it into the console.
+It should create a record in local storage.
+
+```js
+saveToStorage();
+```
+
+You should see a new row appear in the table for `todo`.
+
+### Load data from storage
+
+The data is in the format we want and so we should be able to load it in from localStorage.
+
+In your JavaScript, add the following:
+
+```js
+function loadFromStorage() {
+	clearList();
+	const data = JSON.parse(localStorage.getItem(todo.id));
+	for (const item of data) {
+		addItem(item.text, item.done);
+	}
+}
+
+loadFromStorage();
+
+```
+
+>Here we are actually calling the function in our javascript code.
+
+Our `loadFromStorage` function first clears the list using the existing `clearList` function.
+We then get the string data from `localStorage` and use `JSON.parse` to convert it back into and array of JavaScript objects.
+Finally, we loop over the array and add each item in turn using our existing `addItem` function.
+
+We call the function when the page loads.
+This clears the hard-coded items and replaces them with dynamically generated ones.
+We can see this is working because they now have working delete buttons.
+
+<img src="images/todo-8.png" alt="Data loaded from localStorage" width="70%" style="display: block; margin: 1em auto 0 auto">
+<figcaption style="text-align: center; margin-bottom: 1em">Data loaded from localStorage</figcaption>
+
+
+### Updating the stored list
+
+Refreshing the page reloads the full list from `localStorage`.
+However, we still need to update the stored data (using our `saveToStorage` function) whenever the user changes the list.
+
+We can start with the `add` event listener.
+Just add a call to `saveToStorage()` after the DOM is updated.
+
+>Find this in your code and add the new line
+
+```js
+add.addEventListener('click', ev => {
+	if(text.value) {
+		addItem(text.value);
+		text.value = null;
+		text.focus();
+		saveToStorage(); // <-- this is a new line
+	}
+});
+```
+
+Now you should find that the browser remembers any items you add.
+But they can't be deleted.
+
+So we need to update the event listener we add to each button element **within** the `addItem` function.
+Again, we just need to update the stored data when we make a change to the list.
+
+>Just add the new line into your existing code
+
+```js
+button.addEventListener('click', ev => {
+  item.remove();
+  saveToStorage(); // <-- this is a new line
+});
+```
+
+Now you should be able to add and delete items and the list will be updated in `localStorage` and remembered by the browser.
+
+We also need to add a new event listener within the `addItem` function to listen for the `input` event of the hidden checkbox elements.
+
+>This new code goes within your `addItem` function
+
+```js
+input.addEventListener('input', ev => {
+  saveToStorage();
+});
+```
+
+The complete function now looks like this.
+
+```js
+function addItem(text, done) {
+	const item = document.createElement('li');
+	const label = document.createElement('label');
+	const input = document.createElement('input');
+	const button = document.createElement('button');
+	label.textContent = text;
+	input.type = "checkbox";
+	input.checked = done;
+	input.id = `todo${todo.querySelectorAll('li').length + 1}`;
+	input.addEventListener('input', ev => {
+		saveToStorage();
+	});
+	label.htmlFor = input.id;
+	button.textContent = "×";
+	button.addEventListener('click', ev => {
+		item.remove();
+		saveToStorage();
+	});
+	item.appendChild(input);
+	item.appendChild(label);
+	item.appendChild(button);
+	todo.appendChild(item);
+}
+```
+
+The final thing we need is to update the stored data when we delete the full list.
+Since this is destructive and irreversible we could also add a confirm dialogue.
+
+```js
+clear.addEventListener('click', ev => {
+  if(confirm("Are you sure you want to delete the entire list?")) {
+    clearList();
+    saveToStorage(); // <-- this is a new line    
   }
 });
 ```
 
-The handler is very simple. If the enter key (keyCode 13) is being released then we call `addBtn.click()` to trigger the previously defined event handler for adding an item.
+Now we have a fully functional todo app!
+There are still one or two wrinkles we need to sort out.
 
-So now it is possible to add multiple items to the list without leaving the keyboard.
+If you view the local storage database and clear the todo item from the list then we get an error when the page is refreshed.
 
-Another potential improvement is to allow comma-separated values to be entered into the input and separated out into items on the list.
+<img src="images/todo-9.png" alt="Console error" width="70%" style="display: block; margin: 1em auto 0 auto">
+<figcaption style="text-align: center; margin-bottom: 1em">Console error (your line numbers may be different)</figcaption>
 
-To do this we can adjust the `addBtn` event listener.
 
-```Javascript
-addBtn.addEventListener('click', ev => {
-  newItem.value.split(',').forEach(v => {
-    if(v) {
-      addItem(v);
-    }
-  });
-  newItem.value = null;
-});
+This is because our `loadFromStorage` code relies on this record existing.
+So we need to handle the case when there is no record in localStorage (i.e. the first time the app is loaded on a particular device).
+
+Update the `loadFromStorage` function to handle this.
+
+```js
+function loadFromStorage() {
+	const data = JSON.parse(localStorage.getItem(todo.id));
+	if(data) {
+		clearList();
+		for (const item of data) {
+			addItem(item.text, item.done);
+		}
+	}
+}
 ```
 
-Now the input value is split into an array of strings and each string is added to the list individually (but only if it contains text). Try this by entering multiple items separated by commas.
+Now we check to see if the record exists (it may be empty) before we attempt to iterate over it.
+
+If you got this far, well done.
 
 ## Tidy up
 
@@ -378,48 +748,255 @@ Now we have a working system we will protect all our code inside a self-executin
 ```
 
 This keeps all our variables cleanly outside of the global scope.
+Try it, you can no longer call the `addItem` function from the developer console.
+
+This is the final code:
+
+### index.html
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Todo list</title>
+		<link rel="stylesheet" href="todo.css">
+	</head>
+	<body>
+		<header>
+			<h1>Todo list</h1>
+		</header>
+		<main>
+			<section>
+				<input id="text" placeholder="new todo" aria-label="new todo">
+				<button id="add">add</button>
+			</section>
+			<ul id="todo">
+				<li>
+					<input type="checkbox" id="todo1">
+					<label for="todo1">Study learning materials</label>
+				</li>
+				<li>
+					<input type="checkbox" id="todo2">
+					<label for="todo2">Complete lab exercises</label>
+				</li>
+				<li>
+					<input type="checkbox" id="todo3">
+					<label for="todo3">Attend lab sessions</label>
+				</li>
+				<li>
+					<input type="checkbox" id="todo4">
+					<label for="todo4">Conduct self-directed research</label>
+				</li>
+				<li>
+					<input type="checkbox" id="todo5">
+					<label for="todo5">Ask questions</label>
+				</li>
+			</ul>
+		</main>
+		<footer>
+			<button id="clear">Clear entire list</button>
+		</footer>
+		<script src="todo.js"></script>
+	</body>
+</html>
+```
+
+### todo.css
+
+```css
+@import url('https://fonts.googleapis.com/css2?family=Nunito&display=swap');
+
+:root {
+	--hue: 20;
+	--dark: hsl(var(--hue), 80%, 50%);
+	--light: hsl(var(--hue), 80%, 90%);
+}
+
+body {
+	font-family: Nunito, sans-serif;
+	max-width: 600px;
+	margin: 0 auto;
+}
+
+header, section, footer {
+	background-color: var(--dark);
+	color: var(--light);
+	overflow: auto;
+	padding: 0.5rem;
+}
+
+h1 {
+	margin: 0;
+}
+
+section {
+	display: flex;
+	justify-content: space-between;
+}
+
+input, button {
+	font-size: 1em;
+}
+
+button {
+	border: 1px solid var(--light);
+	background-color: var(--dark);
+	color: var(--light);
+}
+
+ul {
+	list-style: none;
+	user-select: none;
+	padding: 0;
+	margin: 0;
+}
+
+li {
+	padding: 1em 0.5rem;
+	margin: 0;
+	border: 0px solid var(--dark);
+	display: flex;
+	justify-content: space-between;
+}
+
+li:nth-child(odd) {
+	background-color: var(--light);
+	border-width: 0.5px 0;
+}
+
+label {
+	flex-grow: 1;
+}
+
+input[type="checkbox"] {
+	display: none;
+}
+
+input:checked + label {
+	text-decoration: line-through;
+}
+```
+
+### todo.js
+
+```js
+"use strict";
+(() => {
+
+	function addItem(text, done) {
+		const item = document.createElement('li');
+		const label = document.createElement('label');
+		const input = document.createElement('input');
+		const button = document.createElement('button');
+		label.textContent = text;
+		input.type = "checkbox";
+		input.checked = done;
+		input.id = `todo${todo.querySelectorAll('li').length + 1}`;
+		input.addEventListener('input', ev => {
+			saveToStorage();
+		});
+		label.htmlFor = input.id;
+		button.textContent = "×";
+		button.addEventListener('click', ev => {
+			item.remove();
+			saveToStorage();
+		});
+		item.appendChild(input);
+		item.appendChild(label);
+		item.appendChild(button);
+		todo.appendChild(item);
+	}
+
+	function clearList() {
+		while(todo.firstChild) {
+			todo.removeChild(todo.firstChild);
+		}
+	}
+
+	function saveToStorage() {
+		const elements = Array.from(todo.querySelectorAll('li'));
+		const data = elements.map(el => {
+			return {
+				text: el.querySelector('label').textContent,
+				done: el.querySelector('input').checked
+			}
+		});
+		localStorage.setItem(todo.id, JSON.stringify(data));
+	}
+
+	function loadFromStorage() {
+		const data = JSON.parse(localStorage.getItem(todo.id));
+		if(data) {
+			clearList();
+			for (const item of data) {
+				addItem(item.text, item.done);
+			}
+		}
+	}
+
+	add.addEventListener('click', ev => {
+		if(text.value) {
+			addItem(text.value);
+			text.value = null;
+			text.focus();
+			saveToStorage();
+		}
+	});
+
+	clear.addEventListener('click', ev => {
+		clearList();
+		saveToStorage();
+	});
+
+	text.addEventListener('keydown', ev => {
+		if(ev.key == "Enter") {
+			add.click();
+		}
+	});
+
+	loadFromStorage();
+})()
+```
 
 ---
 
-# Challenges
 
-The shopping list app is now fairly functional. However, there are a few scenarios where it could be frustrating to work with and a few possible improvements.
-
-## Multiple tabs
-
-Think about what happens when the app is opened in two tabs simultaneously.
-
-Try this:
-
-1. Open the shopping list in a browser tab and add a few items
-
-2. Open the shopping list in another tab, add a few more items and close the list.
-
-3. Close the original tab.
-
-4. Open the shopping list again.
-
-What happened to your latest additions?
-
-Try to implement an improvement to avoid this problem.
-
-potential solutions:
- - allow a manual load/save option?
- - warn the user before editing the local storage?
- - work with the [`storage`][storageEvent] event?
+---
 
 
-## Multiple lists
 
-If you have got this far then well done. This one is for experts only as it requires some fairly serious adaptations to the code. Though perhaps not as much as you might think.
 
-Our list data are stored under the 'shopping-list' key in local storage.
 
-Think about how you might allow for multiple shopping lists to be stored and managed.
 
-What user interface changes would be required?
 
-Try refactoring the code to allow the user to create and manage multiple named lists.
+
+
+
+
+
+
+
+
+
+
+
+# Challenge
+
+The app is now fairly functional. However, think about what happens when the app is opened in two tabs simultaneously.
+
+Try opening the todo list in two separate browser tabs and work with each list in turn.
+Notice what happens to your edits?
+
+Implement an improvement to avoid this problem.
+
+potential solutions include implementing an explicit and manual load/save option or using the [`storage`][storageEvent] event to keep all tabs synchronised.
+
+>hint: the storage event triggers when another page edits the stored data.
+Its relatively easy to simply call our existing code in response to this event.
+Are any changes required?
+
 
 [addEventListener]: https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener "AddEventListener - MDN"
 

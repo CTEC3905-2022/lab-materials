@@ -946,8 +946,10 @@ input:checked + label {
 	});
 
 	clear.addEventListener('click', ev => {
-		clearList();
-		saveToStorage();
+		if(confirm("Are you sure you want to delete the entire list?")) {
+			clearList();
+			saveToStorage();
+		}
 	});
 
 	text.addEventListener('keydown', ev => {

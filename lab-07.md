@@ -700,6 +700,7 @@ We have another issue that could cause confusion and a loss of trust in the syst
 Try searching for "shark" and then flip between page 1 and page 2 a few times.
 After a few tries, you may notice that the first item on each page changes.
 This is because, in our current implementation, we are placing the elements into the page in the order we receive them.
+
 That is, if the request for the first object in the list takes a while to download then the second item might finish downloading before the first.
 In this case, the second item would appear first.
 With inconsistencies across the network, we cannot guarantee the order.
@@ -707,17 +708,10 @@ With inconsistencies across the network, we cannot guarantee the order.
 #### What's going on?
 
 The code that controls the downloading is the `insertArticle` function.
-We call it like this, looping over our array of 12 objectIDs and passing each into the function in turn.
-
->This is the existing line that calls `insertArticle` for each objectID.
-
-```js
-myObjects.forEach(insertArticle);
-```
-
-Look at the `insertArticle` function.
 Its declared as `async` and uses the `await` keyword when loading the object data from the API.
-This means that the first line will block execution of the function BUT that the function calls will not block each other.
+This means that the first line will block execution of the function BUT the function call itself (to `insertArticle`) will not block.
+
+>This is the existing `insertArticle` function.
 
 ```js
 async function insertArticle(id) {
@@ -727,10 +721,16 @@ async function insertArticle(id) {
 }
 ```
 
-This is the essence of `async/await`.
-By declaring a function as `async`, it will allow execution to continue.
-So our calls to `insertArticle` will all be triggered before the first one has completed.
-Then each of the functions will wait for its `obj` data to be fully extracted from the response before continuing.
+This is the essence of promises and `async/await`.
+
+When we call it, we loop over our array of 12 objectIDs and pass each into the function in turn.
+
+```js
+myObjects.forEach(insertArticle);
+```
+
+Declaring our `insertArticle` function as `async` allows all our calls to `insertArticle` to be triggered before the first one has completed.
+Each of the functions will wait for its `obj` data to be fully extracted from the response before continuing.
 This means that the HTTP requests can be issued in parallel.
 We can see this in the network panel, chrome usually allows for six parallel requests.
 But, the way we have done it means we cannot guarantee the ordering.
@@ -753,19 +753,19 @@ async function insertArticles(objIds) {
 The new function takes a list of objectIDs and maps them to the (`async`) `loadObject` function.
 This generates an array of `Promise` objects.
 We then pass this array into `Promise.all()` with the `await` keyword.
-This means that the function will wait for ALL of the promises to resolve and the variable `objects` will contain a list of data objects *in the correct order*.
+This means that the function will wait for ALL of the promises to resolve and once they are completed, the variable `objects` will contain a list of data objects *in the correct order*.
 
 The remainder of the function just maps these into an array of `<article>` elements and inserts them into the page.
 
 We can now update the `loadPage` function to call our replacement function.
 
 ```js
-function loadPage(page) {
+function loadPage() {
   clearResults();
-  const myObjects = objectIDs.slice((page - 1) * pageSize, page * pageSize);
+  const myObjects = objectIDs.slice((currentPage - 1) * pageSize, currentPage * pageSize);
   // myObjects.forEach(insertArticle);    // old line - remove this
   insertArticles(myObjects);              // new line replaces the above
-  pageIndicator.textContent = page;
+  pageIndicator.textContent = currentPage;
 }
 ```
 
@@ -796,46 +796,49 @@ Add some styles to make a nice looking loader.
 Make it `display: none` by default and visible when the `waiting` class is added.
 
 > Mine looks like this
+
 ```css
 #loader {
-  font-size: 3em;
-  width: 1em;
-  height: 1em;
-  box-sizing: border-box;
-  border-style: solid;
-  border-width: 0.5em;
-  border-color: hsl(0, 70%, 50%) white;
-  border-radius: 50%;
-  position: fixed;
-  left: calc(50vw - 0.5em);
-  top: calc(50vh - 0.5em);
-  opacity: 0;
-  transform: rotate(90deg);
-  transition: 0.5s;
+	font-size: 3em;
+	width: 1em;
+	height: 1em;
+	box-sizing: border-box;
+	border-style: solid;
+	border-width: 0.5em;
+	border-color: hsl(0, 70%, 50%) white;
+	border-radius: 50%;
+	position: fixed;
+	left: calc(50vw - 0.5em);
+	top: calc(50vh - 0.5em);
+	opacity: 0;
+	animation: spin 0.5s ease-in-out alternate infinite;
+	transition: 0.5s;
 }
 
 #loader.waiting {
-  opacity: 1;
-  animation: spin 0.5s ease-in-out alternate infinite;
+	opacity: 1;
 }
 
 @keyframes spin {
-  0% { transform: rotate(-45deg); }
-  100% { transform: rotate(45deg); }
+	0% { transform: rotate(-45deg); }
+	100% { transform: rotate(45deg); }
 }
 ```
+
+<img src="images/museum-06.png" alt="A CSS loading indicator" width="10%" style="display: block; margin: 1em auto 0.25em auto">
+<figcaption style="text-align: center; margin-bottom: 1em">A CSS loading indicator</figcaption>
 
 Now we just need to add and remove the `waiting` class to make the loader appear.
 We can do this in our `loadPage` function, adding the class after the `#results` element has been cleared and remove the class when the articles have been inserted.
 
 ```js
-async function loadPage(page) {
-  clearResults();
-  loader.classList.add("waiting");
-  const myObjects = objectIDs.slice((page - 1) * pageSize, page * pageSize);
-  await insertArticles(myObjects);
-  loader.classList.remove("waiting");
-  pageIndicator.textContent = page;
+async function loadPage() {
+	clearResults();
+	const myObjects = objectIDs.slice((currentPage - 1) * pageSize, currentPage * pageSize);
+	loader.classList.add("waiting");
+	await insertArticles(myObjects);
+	loader.classList.remove("waiting");
+  pageIndicator.textContent = currentPage;
 }
 ```
 
@@ -859,38 +862,425 @@ This should now show our loader element whilst we are waiting for requests to be
 
 ### What about handling larger screens?
 
+OK, so obviously we have neglected the larger screens.
 
+Let's start with the `<header>` element and work down.
+First we will create a grid in the header and put everything in the central column.
+We also add a media query to bump up the font-size.
 
+```css
+header {
+	overflow: auto;
+	padding: 0 1rem;
+	background-color: hsl(0, 70%, 50%);
+	color: white;
+	display: grid;
+	grid-template-columns: 1fr auto 1fr;
+}
+header > * {
+	grid-column: 2 / 3;
+}
 
+@media screen and (min-width: 700px) {
+	header {
+		font-size: 1.2em;
+	}
+}
+```
 
+In the `<main>` element we need to place `<articles>` on a grid to take up the space available and prevent the images taking up the full screen.
 
+We set up a dynamic grid that will automatically create new columns if there is space.
 
+```css
+main {
+  padding: 0 1rem;
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+	grid-column-gap: 3em;
+}
 
+img {
+	width: 100%;
+	height: 300px;
+	object-fit: cover;
+}
+```
 
+Using `object-fit: cover` on the images means that tall or wide images are cropped.
+So we also need a way to show the full, uncropped images.
+For this we will add a modal with the high-quality image.
 
+First, we update the `buildArticleFromData` code.
+We have added a new `<img>` element with the primary (higher quality) image.
+Then we have also added event listeners to toggle a class when the user clicks either image.
+We will use this to make the larger image visible and full-screen.
 
+> The new/edited lines are marked
 
+```js
+function buildArticleFromData(obj) {
+	const article = document.createElement("article");
+	const title = document.createElement("h3");
+	const primaryImageSmall = document.createElement("img");
+	const primaryImage = document.createElement("img");      // new
+	const objectInfo = document.createElement("p");
+	const objectName = document.createElement("span");
+	const objectDate = document.createElement("span");
+	const medium = document.createElement("p");
 
+	title.textContent = obj.title;
+	primaryImageSmall.src = obj.primaryImageSmall;
+	primaryImageSmall.alt = `${obj.title} (small image)`;    // edited
+	primaryImage.src = obj.primaryImage;                     // new
+	primaryImage.alt = obj.title;                            // new
+	primaryImage.className = "modal";                        // new
+	objectName.textContent = obj.objectName;
+	objectDate.textContent = `, ${obj.objectDate}`;
+	medium.textContent = obj.medium;
 
+  // these two event listeners are new
+	primaryImageSmall.addEventListener('click', ev => {
+		primaryImage.classList.add('on');
+	});
+	primaryImage.addEventListener('click', ev => {
+		primaryImage.classList.remove('on');
+	});
 
+	article.appendChild(title);
+	article.appendChild(primaryImage);                       // new
+	article.appendChild(primaryImageSmall);
+	article.appendChild(objectInfo);
+	article.appendChild(medium);
 
+	objectInfo.appendChild(objectName);
+	if(obj.objectDate) {
+		objectInfo.appendChild(objectDate);
+	}
 
+	return article;
+}
 
+```
 
----
+Now we add some styles.
+
+```css
+img.modal {
+	display: none;
+	position: absolute;
+	height: auto;
+	top: 0;
+	left: 0;
+}
+
+.modal.on {
+	display: block;
+}
+```
+
+If you got this far then well done.
+This was an epic lab exercise.
+
+The app is now very usable for browsing the collection and viewing the high quality images in detail.
+
+## Challenges
+
+- Add a checkbox to filter the search based on the `isHighlight` parameter.
+- Try adding a menu from which the department can be selected and filter the search results accordingly.
+- Experiment with the layout and colour scheme to make the app your own.
+- Consider adding some more fields - e.g. artist information
 
 Now compare your app with [the official search app](https://www.metmuseum.org/art/collection/search).
+
 What differences do you notice?
 
+## Learning outcomes
 
-# old stuff
+- Using `fetch` to obtain external API data
+- Using `async/await` to simplify asynchronous code
+- Using `Promise.all` to wait until multiple promises are fulfilled
+- Working with data, pagination
+- Creating complex DOM structures
+- Creating a CSS loading icon
 
----
+
+## Full code listing
+
+Here is the full code listing for my final version.
+
+### index.html
+
+```html
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+	<head>
+		<meta charset="utf-8">
+		<title>The Metropolitan Museum of Art</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link rel="stylesheet" href="styles.css">
+	</head>
+	<body>
+		<header>
+			<h1>The Metropolitan Museum of Art Collection</h1>
+			<section id="search">
+				<label for="query">Search:</label>
+				<input id="query" type="search" placeholder="e.g. kittens">
+			</section>
+			<section id="meta">
+				<span id="count"></span>
+				<span id="pagination">
+					<button id="prev">&lt;</button>
+					page <span id="pageIndicator">0</span> of <span id="nPages">0</span>
+					<button id="next">&gt;</button>
+				</span>
+			</section>
+		</header>
+		<div id="loader"></div>
+		<main id="results"></main>
+		<footer>
+			developed using the <a href="https://metmuseum.github.io/">metmuseum API</a>
+		</footer>
+		<script src="scripts.js"></script>
+	</body>
+</html>
+```
+
+### styles.css
+
+```css
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans+Condensed:wght@300&display=swap');
+
+body {
+	font-family: "Open Sans Condensed", sans-serif;
+	margin: 0;
+}
+
+header {
+	overflow: auto;
+	padding: 0 1rem;
+	background-color: hsl(0, 70%, 50%);
+	color: white;
+	display: grid;
+	grid-template-columns: 1fr auto 1fr;
+}
+header > * {
+	grid-column: 2 / 3;
+}
+
+#search {
+	display: grid;
+	grid-column-gap: 0.5em;
+	grid-template-columns: min-content 1fr;
+}
+
+#search h2 {
+	grid-column: 1 / 3;
+}
+
+#meta {
+	display: flex;
+	justify-content: space-between;
+	padding: 0.5em 0;
+}
+
+main {
+	padding: 0 1rem;
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+	grid-column-gap: 3em;
+}
+
+input {
+	font-size: 1em;
+}
+
+footer {
+	text-align: right;
+	padding: 0.5em 1rem;
+	background-color: hsl(0, 70%, 50%);
+	color: white;
+}
+
+footer a {
+	color: inherit;
+}
+
+img {
+	width: 100%;
+	height: 300px;
+	object-fit: cover;
+}
+
+article {
+	animation: fadeIn 0.8s;
+}
+
+#loader {
+	font-size: 3em;
+	width: 1em;
+	height: 1em;
+	box-sizing: border-box;
+	border-style: solid;
+	border-width: 0.5em;
+	border-color: hsl(0, 70%, 50%) white;
+	border-radius: 50%;
+	position: fixed;
+	left: calc(50vw - 0.5em);
+	top: calc(50vh - 0.5em);
+	opacity: 0;
+	animation: spin 0.5s ease-in-out alternate infinite;
+	transition: 0.5s;
+}
+
+#loader.waiting {
+	opacity: 1;
+}
+
+img.modal {
+	display: none;
+	position: absolute;
+	height: auto;
+	top: 0;
+	left: 0;
+}
+
+.modal.on {
+	display: block;
+}
+
+@keyframes spin {
+	0% { transform: rotate(-45deg); }
+	100% { transform: rotate(45deg); }
+}
+
+@keyframes fadeIn {
+	0% { opacity: 0; }
+	30% { opacity: 0; }
+	100% { opacity: 1; }
+}
 
 
-## 07 Lab learning outcomes
+@media screen and (min-width: 700px) {
+	header {
+		font-size: 1.2em;
+	}
+}
 
-- clone a GIT repository and push it to a new repository of your own
-- understand how to obtain external API data from differing APIs
-- use JavaScript to parse and navigate through JSON data
-- navigate between and checkout GIT branches from a cloned repository
+```
+
+### scripts.js
+
+```js
+let pageSize = 12;
+let currentPage;
+let objectIDs;
+
+async function loadObject(id) {
+	const url = `https://collectionapi.metmuseum.org/public/collection/v1/objects/${id}`;
+	response = await fetch(url);
+	return response.json();
+}
+
+async function loadSearch(query, isHighlight) {
+	let url = `https://collectionapi.metmuseum.org/public/collection/v1/search?hasImages=true`;
+	if(isHighlight) {
+		url = `${url}&isHighlight=${isHighlight}`;
+	}
+	url = `${url}&q=${query}`;
+	response = await fetch(url);
+	return response.json();
+}
+
+// This function converts object data into DOM elements
+function buildArticleFromData(obj) {
+	const article = document.createElement("article");
+	const title = document.createElement("h3");
+	const primaryImageSmall = document.createElement("img");
+	const primaryImage = document.createElement("img");
+	const objectInfo = document.createElement("p");
+	const objectName = document.createElement("span");
+	const objectDate = document.createElement("span");
+	const medium = document.createElement("p");
+
+	title.textContent = obj.title;
+	primaryImageSmall.src = obj.primaryImageSmall;
+	primaryImageSmall.alt = `${obj.title} (small image)`;
+	primaryImage.src = obj.primaryImage;
+	primaryImage.alt = obj.title;
+	primaryImage.className = "modal";
+	objectName.textContent = obj.objectName;
+	objectDate.textContent = `, ${obj.objectDate}`;
+	medium.textContent = obj.medium;
+
+	primaryImageSmall.addEventListener('click', ev => {
+		primaryImage.classList.add('on');
+	});
+	primaryImage.addEventListener('click', ev => {
+		primaryImage.classList.remove('on');
+	});
+
+	article.appendChild(title);
+	article.appendChild(primaryImage);
+	article.appendChild(primaryImageSmall);
+	article.appendChild(objectInfo);
+	article.appendChild(medium);
+
+	objectInfo.appendChild(objectName);
+	if(obj.objectDate) {
+		objectInfo.appendChild(objectDate);
+	}
+
+	return article;
+}
+
+async function insertArticles(objIds) {
+	objects = await Promise.all(objIds.map(loadObject))
+	articles = objects.map(buildArticleFromData);
+	articles.forEach(a => results.appendChild(a));
+}
+
+async function doSearch(ev) {
+	clearResults();
+	loader.classList.add("waiting");
+	result = await loadSearch(query.value);
+	objectIDs = result.objectIDs;
+	count.textContent = `found ${objectIDs.length} results for "${query.value}"`;
+	nPages.textContent = Math.ceil(objectIDs.length / pageSize);
+	currentPage = 1;
+	loadPage();
+}
+
+async function loadPage() {
+	clearResults();
+	const myObjects = objectIDs.slice((currentPage - 1) * pageSize, currentPage * pageSize);
+	loader.classList.add("waiting");
+	await insertArticles(myObjects);
+	loader.classList.remove("waiting");
+  pageIndicator.textContent = currentPage;
+}
+
+function nextPage() {
+	currentPage += 1;
+	const nPages = Math.ceil(objectIDs.length / pageSize);
+	if(currentPage > nPages) { currentPage = 1;}
+	loadPage();
+}
+function prevPage() {
+	currentPage -= 1;
+	const nPages = Math.ceil(objectIDs.length / pageSize);
+	if(currentPage < 1) { currentPage = nPages;}
+	loadPage();
+}
+
+function clearResults() {
+	while(results.firstChild) {
+		results.firstChild.remove();
+	}
+}
+
+query.addEventListener('change', doSearch);
+prev.addEventListener('click', prevPage);
+next.addEventListener('click', nextPage);
+
+```

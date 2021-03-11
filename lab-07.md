@@ -328,12 +328,9 @@ The final paragraph displays the `medium` field.
 We should also add some styles to keep the articles lined up with everything else and make them appear nicely.
 
 ```css
-main {
-  padding: 0 1rem;
-}
-
 article {
   animation: fadeIn 1s;
+  padding: 0 1rem;
 }
 
 @keyframes fadeIn {
@@ -627,11 +624,12 @@ Otherwise, it is similar to the old `doSearch` function but relies on the `objec
 
 We need to update our `doSearch` function to update `objectIDs` and call the new `loadPage` function.
 It also calculate the number of available pages and populates the search meta-data.
+We also catch the situation where the search returns nothing, in this case we need an empty array rather than the `null` value provided by the API.
 
 ```js
 async function doSearch() {
   result = await loadSearch(query.value);
-  objectIDs = result.objectIDs;   // store the search result in our variable
+  objectIDs = result.objectIDs || [];   // store the search result (or an empty list) in our variable
   count.textContent = `found ${objectIDs.length} results for "${query.value}"`;
   nPages.textContent = Math.ceil(objectIDs.length / pageSize);
   currentPage = 1;     // set the currentPage
@@ -864,7 +862,8 @@ This should now show our loader element whilst we are waiting for requests to be
 
 OK, so obviously we have neglected the larger screens.
 
-Let's start with the `<header>` element and work down.
+#### Centralise the header
+
 First we will create a grid in the header and put everything in the central column.
 We also add a media query to bump up the font-size.
 
@@ -888,16 +887,22 @@ header > * {
 }
 ```
 
+#### Layout the articles
+
 In the `<main>` element we need to place `<articles>` on a grid to take up the space available and prevent the images taking up the full screen.
 
 We set up a dynamic grid that will automatically create new columns if there is space.
 
 ```css
 main {
-  padding: 0 1rem;
 	display: grid;
 	grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-	grid-column-gap: 3em;
+	grid-column-gap: 2em;
+}
+
+article {
+  animation: fadeIn 0.8s;
+  padding: 0 1rem;  
 }
 
 img {
@@ -907,23 +912,23 @@ img {
 }
 ```
 
+#### Enable viewing larger images
+
 Using `object-fit: cover` on the images means that tall or wide images are cropped.
 So we also need a way to show the full, uncropped images.
 For this we will add a modal with the high-quality image.
 
 First, we update the `buildArticleFromData` code.
 We have added a new `<img>` element with the primary (higher quality) image.
-Then we have also added event listeners to toggle a class when the user clicks either image.
-We will use this to make the larger image visible and full-screen.
-
-> The new/edited lines are marked
+The image will be placed within a `<div class="modal">` element so we can style it as a modal that covers the entire screen.
 
 ```js
 function buildArticleFromData(obj) {
 	const article = document.createElement("article");
 	const title = document.createElement("h3");
 	const primaryImageSmall = document.createElement("img");
-	const primaryImage = document.createElement("img");      // new
+	const modal = document.createElement('div');
+	const primaryImage = document.createElement("img");
 	const objectInfo = document.createElement("p");
 	const objectName = document.createElement("span");
 	const objectDate = document.createElement("span");
@@ -931,24 +936,21 @@ function buildArticleFromData(obj) {
 
 	title.textContent = obj.title;
 	primaryImageSmall.src = obj.primaryImageSmall;
-	primaryImageSmall.alt = `${obj.title} (small image)`;    // edited
-	primaryImage.src = obj.primaryImage;                     // new
-	primaryImage.alt = obj.title;                            // new
-	primaryImage.className = "modal";                        // new
+	primaryImageSmall.alt = `${obj.title} (small image)`;
+	primaryImage.src = obj.primaryImage;
+	primaryImage.alt = obj.title;
+	modal.className = "modal";
 	objectName.textContent = obj.objectName;
 	objectDate.textContent = `, ${obj.objectDate}`;
 	medium.textContent = obj.medium;
 
-  // these two event listeners are new
-	primaryImageSmall.addEventListener('click', ev => {
-		primaryImage.classList.add('on');
-	});
-	primaryImage.addEventListener('click', ev => {
-		primaryImage.classList.remove('on');
+	article.addEventListener('click', ev => {
+		modal.classList.toggle('on');
 	});
 
 	article.appendChild(title);
-	article.appendChild(primaryImage);                       // new
+	article.appendChild(modal);
+	modal.appendChild(primaryImage);
 	article.appendChild(primaryImageSmall);
 	article.appendChild(objectInfo);
 	article.appendChild(medium);
@@ -963,28 +965,49 @@ function buildArticleFromData(obj) {
 
 ```
 
+We have added an event listener to toggle a class when the user clicks the article.
+We will use this to use the full viewport to display the larger image.
+
 Now we add some styles.
 
 ```css
-img.modal {
+.modal {
 	display: none;
-	position: absolute;
-	height: auto;
+	position: fixed;
+	height: 100vh;
+	width: 100vw;
+	background-color: hsla(0, 70%, 10%, 0.7);
 	top: 0;
 	left: 0;
+	overflow-y: scroll;
+	align-items: center;
 }
 
 .modal.on {
-	display: block;
+	display: flex;
 }
+
+.modal img {
+	height: auto;
+	position: absolute;
+	top: 0;
+}
+
 ```
 
-If you got this far then well done.
-This was an epic lab exercise.
+The modal element is given the full dimensions of the viewport and has a transparent background.
+The image within it is positioned at the top of the screen which is usually OK but depending on the image aspect ratio, can be less than ideal.
+Tall images are catered for well but wide images are not presented well on narrow devices.
 
 The app is now very usable for browsing the collection and viewing the high quality images in detail.
 
 ## Challenges
+
+If you got this far then well done.
+This was an epic lab exercise.
+
+These challenges are optional.
+If you have enjoyed the exercise then try some of these.
 
 - Add a checkbox to filter the search based on the `isHighlight` parameter.
 - Try adding a menu from which the department can be selected and filter the search results accordingly.
@@ -1085,10 +1108,9 @@ header > * {
 }
 
 main {
-	padding: 0 1rem;
 	display: grid;
 	grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-	grid-column-gap: 3em;
+	grid-column-gap: 2em;
 }
 
 input {
@@ -1114,6 +1136,7 @@ img {
 
 article {
 	animation: fadeIn 0.8s;
+	padding: 0 1rem;
 }
 
 #loader {
@@ -1166,7 +1189,6 @@ img.modal {
 		font-size: 1.2em;
 	}
 }
-
 ```
 
 ### scripts.js

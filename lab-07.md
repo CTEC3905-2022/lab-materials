@@ -195,7 +195,7 @@ You should see all the http requests made by your page.
 These will include an item called `10000`.
 Click on it and look at the `preview`.
 
-<img src="images/museum-01.png" alt="museum object data" width="80%" style="display: block; margin: 1em auto 0.25em auto">
+<img src="images/museum-01.png" alt="museum object data" width="100%" style="display: block; margin: 1em auto 0.25em auto">
 <figcaption style="text-align: center; margin-bottom: 1em">museum object data</figcaption>
 
 You should see a large data object like the one above.
@@ -275,7 +275,7 @@ This is because it is an `async` function.
 
 Now our app is starting to take shape.
 
-<img src="images/museum-02.png" alt="an image is inserted into the DOM" width="80%" style="display: block; margin: 1em auto 0.25em auto">
+<img src="images/museum-02.png" alt="an image is inserted into the DOM" width="100%" style="display: block; margin: 1em auto 0.25em auto">
 <figcaption style="text-align: center; margin-bottom: 1em">an image is inserted into the DOM</figcaption>
 
 This is good progress.
@@ -459,7 +459,7 @@ query.addEventListener('change', doSearch);
 
 Try it by typing "kittens" into the search field.
 
-<img src="images/museum-04.png" alt="search is working" width="80%" style="display: block; margin: 1em auto 0.25em auto">
+<img src="images/museum-04.png" alt="search is working" width="100%" style="display: block; margin: 1em auto 0.25em auto">
 <figcaption style="text-align: center; margin-bottom: 1em">search is working</figcaption>
 
 The full list of 22 articles are added to the page one by one.

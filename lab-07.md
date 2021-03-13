@@ -235,7 +235,7 @@ function buildArticleFromData(obj) {
   return article;
 }
 ```
-> This approach should be familiar to you from last week
+> This approach should be familiar to you from last week.
 We also add an `alt` attribute based on the object `title`.
 
 

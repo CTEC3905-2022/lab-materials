@@ -433,8 +433,6 @@ loadSearch("kittens");
 
 Now we have already done most of the work, we just need to plumb it together.
 Add the following function to load the search results and add an article for each one in turn.
-Our existing code does all the work.
-This is a sign of good structure.
 
 > #### BE CAREFUL!
 Once this is in the code, if you search for something that produces a lot of results (e.g. "cat") then you could crash your page.
@@ -449,6 +447,9 @@ async function doSearch() {
 >We are using the value from the `input#query` element as our query string.
 The API gives us an array of objectIDs.
 The `forEach` method allows us to pass each of these ObjectIDs into our insertArticle function, one at a time.
+
+Our existing code does all the work.
+This is a sign of good structure.
 
 #### Add an event listener
 

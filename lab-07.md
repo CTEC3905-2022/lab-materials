@@ -14,7 +14,6 @@ The basic functional requirements are as follows:
 - Users can enter a search term
 - On searching, users are presented with details of any matching items
 - If more than 12 items match the search, users can navigate 12 items at a time with previous and next buttons
-- Users can filter the results by department
 
 As with last week, take this lab slowly and try to understand each step.
 Ask questions as soon as they arise.
@@ -1011,10 +1010,10 @@ This was an epic lab exercise.
 These challenges are optional.
 If you have enjoyed the exercise then try some of these.
 
-- Add a checkbox to filter the search based on the `isHighlight` parameter.
-- Try adding a menu from which the department can be selected and filter the search results accordingly.
 - Experiment with the layout and colour scheme to make the app your own.
 - Consider adding some more fields - e.g. artist information
+- Add a checkbox to filter the search based on the `isHighlight` parameter.
+- Try adding a menu from which the department can be selected and filter the search results accordingly.
 
 Now compare your app with [the official search app](https://www.metmuseum.org/art/collection/search).
 

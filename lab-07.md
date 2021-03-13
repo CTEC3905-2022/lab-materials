@@ -218,7 +218,7 @@ Let's do something with these data.
 
 #### Building the DOM
 
-What we need to do now it to build DOM elements based on our data.
+We need to build DOM elements based on our data so we can see the object in our page.
 We will create a separate function for this as it is a distinct piece of logic well-suited to a function of its own.
 
 Our function takes a data object as input and returns an `<article>` element as output.

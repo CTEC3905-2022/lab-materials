@@ -253,6 +253,7 @@ async function insertArticle(id) {
 
 >Again, we are using `async` here because it allows us to use `await` when we call `loadObject` (avoiding the need for a `then()` block).
 It also means that the function returns a `Promise` even though we don't return a value explicitly.
+We can expect the function to do its work asynchronously, it will allow other code to execute while it waits for the response to be fulfilled.
 
 Before we continue, we need to add some styles to fit our image to the viewport (we are still only working on the default styles for the mobile size).
 

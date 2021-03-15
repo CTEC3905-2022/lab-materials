@@ -439,7 +439,7 @@ We will address this later, just use "kittens" as the search term for now.
 
 ```js
 async function doSearch() {
-  result = await loadSearch(query.value);
+  const result = await loadSearch(query.value);
   result.objectIDs.forEach(insertArticle);
 }
 ```
@@ -493,7 +493,7 @@ Let's call a function to do the job.
 ```js
 async function doSearch() {
   clearResults();
-  result = await loadSearch(query.value);
+  const result = await loadSearch(query.value);
   result.objectIDs.forEach(insertArticle);
 }
 ```
@@ -537,7 +537,7 @@ Now update the content of the `span#count` element when we know how many results
 
 ```js
 async function doSearch() {
-  result = await loadSearch(query.value);
+  const result = await loadSearch(query.value);
   count.textContent = `found ${result.objectIDs.length} results for "${query.value}"`;
   clearResults();
   result.objectIDs.forEach(insertArticle);
@@ -629,7 +629,7 @@ We also catch the situation where the search returns nothing, in this case we ne
 
 ```js
 async function doSearch() {
-  result = await loadSearch(query.value);
+  const result = await loadSearch(query.value);
   objectIDs = result.objectIDs || [];   // store the search result (or an empty list) in our variable
   count.textContent = `found ${objectIDs.length} results for "${query.value}"`;
   nPages.textContent = Math.ceil(objectIDs.length / pageSize);
@@ -848,7 +848,7 @@ This will be removed once the page is loaded.
 async function doSearch(ev) {
   clearResults();
   loader.classList.add("waiting");
-  result = await loadSearch(query.value);
+  const result = await loadSearch(query.value);
   objectIDs = result.objectIDs;
   count.textContent = `found ${objectIDs.length} results for "${query.value}"`;
   nPages.textContent = Math.ceil(objectIDs.length / pageSize);
@@ -1266,7 +1266,7 @@ async function insertArticles(objIds) {
 async function doSearch(ev) {
 	clearResults();
 	loader.classList.add("waiting");
-	result = await loadSearch(query.value);
+	const result = await loadSearch(query.value);
 	objectIDs = result.objectIDs;
 	count.textContent = `found ${objectIDs.length} results for "${query.value}"`;
 	nPages.textContent = Math.ceil(objectIDs.length / pageSize);

@@ -163,7 +163,7 @@ We can get the data for an object using JavaScript with an `async` function.
 ```js
 async function loadObject(id) {
   const url = `https://collectionapi.metmuseum.org/public/collection/v1/objects/${id}`;
-  response = await fetch(url);
+  const response = await fetch(url);
   return response.json();
 }
 ```
@@ -244,8 +244,8 @@ For now we can write a simple function like this to carry out these three basic 
 
 ```js
 async function insertArticle(id) {
-  obj = await loadObject(id);
-  article = buildArticleFromData(obj);
+  const obj = await loadObject(id);
+  const article = buildArticleFromData(obj);
   results.appendChild(article);
 }
 ```
@@ -410,7 +410,7 @@ We will start with a function very similar to our existing `loadObject` function
 ```js
 async function loadSearch(query) {
   let baseURL = `https://collectionapi.metmuseum.org/public/collection/v1/search`;
-  response = await fetch(`${baseURL}?hasImages=true&q=${query}`);
+  const response = await fetch(`${baseURL}?hasImages=true&q=${query}`);
   return response.json();
 }
 ```
@@ -714,8 +714,8 @@ This means that the first line will block execution of the function BUT the func
 
 ```js
 async function insertArticle(id) {
-  obj = await loadObject(id);
-  article = buildArticleFromData(obj);
+  const obj = await loadObject(id);
+  const article = buildArticleFromData(obj);
   results.appendChild(article);
 }
 ```
@@ -1201,7 +1201,7 @@ let objectIDs;
 
 async function loadObject(id) {
 	const url = `https://collectionapi.metmuseum.org/public/collection/v1/objects/${id}`;
-	response = await fetch(url);
+	const response = await fetch(url);
 	return response.json();
 }
 
@@ -1211,7 +1211,7 @@ async function loadSearch(query, isHighlight) {
 		url = `${url}&isHighlight=${isHighlight}`;
 	}
 	url = `${url}&q=${query}`;
-	response = await fetch(url);
+	const response = await fetch(url);
 	return response.json();
 }
 

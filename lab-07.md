@@ -161,6 +161,8 @@ Changing the objectId in the url requests data for different artifacts.
 We can get the data for an object using JavaScript with an `async` function.
 
 ```js
+"use strict";
+
 async function loadObject(id) {
   const url = `https://collectionapi.metmuseum.org/public/collection/v1/objects/${id}`;
   const response = await fetch(url);
@@ -468,7 +470,7 @@ This is brilliant, but there are a few issues with the user interface we need to
 
 - What happens when we search again?
 - What if there are hundreds of results?
-- Hold one, is the order consistent?
+- Hold on, is the order consistent?
 - What if the request takes ages?
 - What about handling larger screens?
 
@@ -692,7 +694,7 @@ Notice that only the first 12 objects are being requested (check the network pan
 Clicking the `button#next` loads 12 more.
 Using the previous and next buttons allows the user to navigate through large result sets in this way.
 
-### Hold one, is the order consistent?
+### Hold on, is the order consistent?
 
 We have another issue that could cause confusion and a loss of trust in the system.
 

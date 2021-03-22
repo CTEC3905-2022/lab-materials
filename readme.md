@@ -23,3 +23,5 @@ If you find any mistakes or have any suggestions then please report them to your
 ([source](lab-06.md))
 - [Lab 7: Getting data from APIs](https://ctec3905-2020-21.github.io/lab-materials/lab-07.html)
 ([source](lab-07.md))
+- [Lab 8: Animations](https://ctec3905-2020-21.github.io/lab-materials/lab-08.html)
+([source](lab-08.md))

@@ -800,29 +800,29 @@ Make it `display: none` by default and visible when the `waiting` class is added
 
 ```css
 #loader {
-	font-size: 3em;
-	width: 1em;
-	height: 1em;
-	box-sizing: border-box;
-	border-style: solid;
-	border-width: 0.5em;
-	border-color: hsl(0, 70%, 50%) white;
-	border-radius: 50%;
-	position: fixed;
-	left: calc(50vw - 0.5em);
-	top: calc(50vh - 0.5em);
-	opacity: 0;
-	animation: spin 0.5s ease-in-out alternate infinite;
-	transition: 0.5s;
+  font-size: 3em;
+  width: 1em;
+  height: 1em;
+  box-sizing: border-box;
+  border-style: solid;
+  border-width: 0.5em;
+  border-color: hsl(0, 70%, 50%) white;
+  border-radius: 50%;
+  position: fixed;
+  left: calc(50vw - 0.5em);
+  top: calc(50vh - 0.5em);
+  opacity: 0;
+  animation: spin 0.5s ease-in-out alternate infinite;
+  transition: 0.5s;
 }
 
 #loader.waiting {
-	opacity: 1;
+  opacity: 1;
 }
 
 @keyframes spin {
-	0% { transform: rotate(-45deg); }
-	100% { transform: rotate(45deg); }
+  0% { transform: rotate(-45deg); }
+  100% { transform: rotate(45deg); }
 }
 ```
 
@@ -834,11 +834,11 @@ We can do this in our `loadPage` function, adding the class after the `#results`
 
 ```js
 async function loadPage() {
-	clearResults();
-	const myObjects = objectIDs.slice((currentPage - 1) * pageSize, currentPage * pageSize);
-	loader.classList.add("waiting");
-	await insertArticles(myObjects);
-	loader.classList.remove("waiting");
+  clearResults();
+  const myObjects = objectIDs.slice((currentPage - 1) * pageSize, currentPage * pageSize);
+  loader.classList.add("waiting");
+  await insertArticles(myObjects);
+  loader.classList.remove("waiting");
   pageIndicator.textContent = currentPage;
 }
 ```
@@ -872,21 +872,21 @@ We also add a media query to bump up the font-size.
 
 ```css
 header {
-	overflow: auto;
-	padding: 0 1rem;
-	background-color: hsl(0, 70%, 50%);
-	color: white;
-	display: grid;
-	grid-template-columns: 1fr auto 1fr;
+  overflow: auto;
+  padding: 0 1rem;
+  background-color: hsl(0, 70%, 50%);
+  color: white;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
 }
 header > * {
-	grid-column: 2 / 3;
+  grid-column: 2 / 3;
 }
 
 @media screen and (min-width: 700px) {
-	header {
-		font-size: 1.2em;
-	}
+  header {
+    font-size: 1.2em;
+  }
 }
 ```
 
@@ -898,9 +898,9 @@ We set up a dynamic grid that will automatically create new columns if there is 
 
 ```css
 main {
-	display: grid;
-	grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-	grid-column-gap: 2em;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-column-gap: 2em;
 }
 
 article {
@@ -909,9 +909,9 @@ article {
 }
 
 img {
-	width: 100%;
-	height: 300px;
-	object-fit: cover;
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
 }
 ```
 
@@ -927,43 +927,43 @@ The image will be placed within a `<div class="modal">` element so we can style 
 
 ```js
 function buildArticleFromData(obj) {
-	const article = document.createElement("article");
-	const title = document.createElement("h3");
-	const primaryImageSmall = document.createElement("img");
-	const modal = document.createElement('div');
-	const primaryImage = document.createElement("img");
-	const objectInfo = document.createElement("p");
-	const objectName = document.createElement("span");
-	const objectDate = document.createElement("span");
-	const medium = document.createElement("p");
+  const article = document.createElement("article");
+  const title = document.createElement("h3");
+  const primaryImageSmall = document.createElement("img");
+  const modal = document.createElement('div');
+  const primaryImage = document.createElement("img");
+  const objectInfo = document.createElement("p");
+  const objectName = document.createElement("span");
+  const objectDate = document.createElement("span");
+  const medium = document.createElement("p");
 
-	title.textContent = obj.title;
-	primaryImageSmall.src = obj.primaryImageSmall;
-	primaryImageSmall.alt = `${obj.title} (small image)`;
-	primaryImage.src = obj.primaryImage;
-	primaryImage.alt = obj.title;
-	modal.className = "modal";
-	objectName.textContent = obj.objectName;
-	objectDate.textContent = `, ${obj.objectDate}`;
-	medium.textContent = obj.medium;
+  title.textContent = obj.title;
+  primaryImageSmall.src = obj.primaryImageSmall;
+  primaryImageSmall.alt = `${obj.title} (small image)`;
+  primaryImage.src = obj.primaryImage;
+  primaryImage.alt = obj.title;
+  modal.className = "modal";
+  objectName.textContent = obj.objectName;
+  objectDate.textContent = `, ${obj.objectDate}`;
+  medium.textContent = obj.medium;
 
-	article.addEventListener('click', ev => {
-		modal.classList.toggle('on');
-	});
+  article.addEventListener('click', ev => {
+    modal.classList.toggle('on');
+  });
 
-	article.appendChild(title);
-	article.appendChild(modal);
-	modal.appendChild(primaryImage);
-	article.appendChild(primaryImageSmall);
-	article.appendChild(objectInfo);
-	article.appendChild(medium);
+  article.appendChild(title);
+  article.appendChild(modal);
+  modal.appendChild(primaryImage);
+  article.appendChild(primaryImageSmall);
+  article.appendChild(objectInfo);
+  article.appendChild(medium);
 
-	objectInfo.appendChild(objectName);
-	if(obj.objectDate) {
-		objectInfo.appendChild(objectDate);
-	}
+  objectInfo.appendChild(objectName);
+  if(obj.objectDate) {
+    objectInfo.appendChild(objectDate);
+  }
 
-	return article;
+  return article;
 }
 
 ```
@@ -975,25 +975,25 @@ Now we add some styles.
 
 ```css
 .modal {
-	display: none;
-	position: fixed;
-	height: 100vh;
-	width: 100vw;
-	background-color: hsla(0, 70%, 10%, 0.7);
-	top: 0;
-	left: 0;
-	overflow-y: scroll;
-	align-items: center;
+  display: none;
+  position: fixed;
+  height: 100vh;
+  width: 100vw;
+  background-color: hsla(0, 70%, 10%, 0.7);
+  top: 0;
+  left: 0;
+  overflow-y: scroll;
+  align-items: center;
 }
 
 .modal.on {
-	display: flex;
+  display: flex;
 }
 
 .modal img {
-	height: auto;
-	position: absolute;
-	top: 0;
+  height: auto;
+  position: absolute;
+  top: 0;
 }
 
 ```
@@ -1040,35 +1040,35 @@ Here is the full code listing for my final version.
 ```html
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
-	<head>
-		<meta charset="utf-8">
-		<title>The Metropolitan Museum of Art</title>
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<link rel="stylesheet" href="styles.css">
-	</head>
-	<body>
-		<header>
-			<h1>The Metropolitan Museum of Art Collection</h1>
-			<section id="search">
-				<label for="query">Search:</label>
-				<input id="query" type="search" placeholder="e.g. kittens">
-			</section>
-			<section id="meta">
-				<span id="count"></span>
-				<span id="pagination">
-					<button id="prev">&lt;</button>
-					page <span id="pageIndicator">0</span> of <span id="nPages">0</span>
-					<button id="next">&gt;</button>
-				</span>
-			</section>
-		</header>
-		<div id="loader"></div>
-		<main id="results"></main>
-		<footer>
-			developed using the <a href="https://metmuseum.github.io/">metmuseum API</a>
-		</footer>
-		<script src="scripts.js"></script>
-	</body>
+  <head>
+    <meta charset="utf-8">
+    <title>The Metropolitan Museum of Art</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <header>
+      <h1>The Metropolitan Museum of Art Collection</h1>
+      <section id="search">
+        <label for="query">Search:</label>
+        <input id="query" type="search" placeholder="e.g. kittens">
+      </section>
+      <section id="meta">
+        <span id="count"></span>
+        <span id="pagination">
+          <button id="prev">&lt;</button>
+          page <span id="pageIndicator">0</span> of <span id="nPages">0</span>
+          <button id="next">&gt;</button>
+        </span>
+      </section>
+    </header>
+    <div id="loader"></div>
+    <main id="results"></main>
+    <footer>
+      developed using the <a href="https://metmuseum.github.io/">metmuseum API</a>
+    </footer>
+    <script src="scripts.js"></script>
+  </body>
 </html>
 ```
 
@@ -1078,119 +1078,119 @@ Here is the full code listing for my final version.
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans+Condensed:wght@300&display=swap');
 
 body {
-	font-family: "Open Sans Condensed", sans-serif;
-	margin: 0;
+  font-family: "Open Sans Condensed", sans-serif;
+  margin: 0;
 }
 
 header {
-	overflow: auto;
-	padding: 0 1rem;
-	background-color: hsl(0, 70%, 50%);
-	color: white;
-	display: grid;
-	grid-template-columns: 1fr auto 1fr;
+  overflow: auto;
+  padding: 0 1rem;
+  background-color: hsl(0, 70%, 50%);
+  color: white;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
 }
 header > * {
-	grid-column: 2 / 3;
+  grid-column: 2 / 3;
 }
 
 #search {
-	display: grid;
-	grid-column-gap: 0.5em;
-	grid-template-columns: min-content 1fr;
+  display: grid;
+  grid-column-gap: 0.5em;
+  grid-template-columns: min-content 1fr;
 }
 
 #search h2 {
-	grid-column: 1 / 3;
+  grid-column: 1 / 3;
 }
 
 #meta {
-	display: flex;
-	justify-content: space-between;
-	padding: 0.5em 0;
+  display: flex;
+  justify-content: space-between;
+  padding: 0.5em 0;
 }
 
 main {
-	display: grid;
-	grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-	grid-column-gap: 2em;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-column-gap: 2em;
 }
 
 input {
-	font-size: 1em;
+  font-size: 1em;
 }
 
 footer {
-	text-align: right;
-	padding: 0.5em 1rem;
-	background-color: hsl(0, 70%, 50%);
-	color: white;
+  text-align: right;
+  padding: 0.5em 1rem;
+  background-color: hsl(0, 70%, 50%);
+  color: white;
 }
 
 footer a {
-	color: inherit;
+  color: inherit;
 }
 
 img {
-	width: 100%;
-	height: 300px;
-	object-fit: cover;
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
 }
 
 article {
-	animation: fadeIn 0.8s;
-	padding: 0 1rem;
+  animation: fadeIn 0.8s;
+  padding: 0 1rem;
 }
 
 #loader {
-	font-size: 3em;
-	width: 1em;
-	height: 1em;
-	box-sizing: border-box;
-	border-style: solid;
-	border-width: 0.5em;
-	border-color: hsl(0, 70%, 50%) white;
-	border-radius: 50%;
-	position: fixed;
-	left: calc(50vw - 0.5em);
-	top: calc(50vh - 0.5em);
-	opacity: 0;
-	animation: spin 0.5s ease-in-out alternate infinite;
-	transition: 0.5s;
+  font-size: 3em;
+  width: 1em;
+  height: 1em;
+  box-sizing: border-box;
+  border-style: solid;
+  border-width: 0.5em;
+  border-color: hsl(0, 70%, 50%) white;
+  border-radius: 50%;
+  position: fixed;
+  left: calc(50vw - 0.5em);
+  top: calc(50vh - 0.5em);
+  opacity: 0;
+  animation: spin 0.5s ease-in-out alternate infinite;
+  transition: 0.5s;
 }
 
 #loader.waiting {
-	opacity: 1;
+  opacity: 1;
 }
 
 img.modal {
-	display: none;
-	position: absolute;
-	height: auto;
-	top: 0;
-	left: 0;
+  display: none;
+  position: absolute;
+  height: auto;
+  top: 0;
+  left: 0;
 }
 
 .modal.on {
-	display: block;
+  display: block;
 }
 
 @keyframes spin {
-	0% { transform: rotate(-45deg); }
-	100% { transform: rotate(45deg); }
+  0% { transform: rotate(-45deg); }
+  100% { transform: rotate(45deg); }
 }
 
 @keyframes fadeIn {
-	0% { opacity: 0; }
-	30% { opacity: 0; }
-	100% { opacity: 1; }
+  0% { opacity: 0; }
+  30% { opacity: 0; }
+  100% { opacity: 1; }
 }
 
 
 @media screen and (min-width: 700px) {
-	header {
-		font-size: 1.2em;
-	}
+  header {
+    font-size: 1.2em;
+  }
 }
 ```
 
@@ -1202,106 +1202,106 @@ let currentPage;
 let objectIDs;
 
 async function loadObject(id) {
-	const url = `https://collectionapi.metmuseum.org/public/collection/v1/objects/${id}`;
-	const response = await fetch(url);
-	return response.json();
+  const url = `https://collectionapi.metmuseum.org/public/collection/v1/objects/${id}`;
+  const response = await fetch(url);
+  return response.json();
 }
 
 async function loadSearch(query, isHighlight) {
-	let url = `https://collectionapi.metmuseum.org/public/collection/v1/search?hasImages=true`;
-	if(isHighlight) {
-		url = `${url}&isHighlight=${isHighlight}`;
-	}
-	url = `${url}&q=${query}`;
-	const response = await fetch(url);
-	return response.json();
+  let url = `https://collectionapi.metmuseum.org/public/collection/v1/search?hasImages=true`;
+  if(isHighlight) {
+    url = `${url}&isHighlight=${isHighlight}`;
+  }
+  url = `${url}&q=${query}`;
+  const response = await fetch(url);
+  return response.json();
 }
 
 // This function converts object data into DOM elements
 function buildArticleFromData(obj) {
-	const article = document.createElement("article");
-	const title = document.createElement("h3");
-	const primaryImageSmall = document.createElement("img");
-	const primaryImage = document.createElement("img");
-	const objectInfo = document.createElement("p");
-	const objectName = document.createElement("span");
-	const objectDate = document.createElement("span");
-	const medium = document.createElement("p");
+  const article = document.createElement("article");
+  const title = document.createElement("h3");
+  const primaryImageSmall = document.createElement("img");
+  const primaryImage = document.createElement("img");
+  const objectInfo = document.createElement("p");
+  const objectName = document.createElement("span");
+  const objectDate = document.createElement("span");
+  const medium = document.createElement("p");
 
-	title.textContent = obj.title;
-	primaryImageSmall.src = obj.primaryImageSmall;
-	primaryImageSmall.alt = `${obj.title} (small image)`;
-	primaryImage.src = obj.primaryImage;
-	primaryImage.alt = obj.title;
-	primaryImage.className = "modal";
-	objectName.textContent = obj.objectName;
-	objectDate.textContent = `, ${obj.objectDate}`;
-	medium.textContent = obj.medium;
+  title.textContent = obj.title;
+  primaryImageSmall.src = obj.primaryImageSmall;
+  primaryImageSmall.alt = `${obj.title} (small image)`;
+  primaryImage.src = obj.primaryImage;
+  primaryImage.alt = obj.title;
+  primaryImage.className = "modal";
+  objectName.textContent = obj.objectName;
+  objectDate.textContent = `, ${obj.objectDate}`;
+  medium.textContent = obj.medium;
 
-	primaryImageSmall.addEventListener('click', ev => {
-		primaryImage.classList.add('on');
-	});
-	primaryImage.addEventListener('click', ev => {
-		primaryImage.classList.remove('on');
-	});
+  primaryImageSmall.addEventListener('click', ev => {
+    primaryImage.classList.add('on');
+  });
+  primaryImage.addEventListener('click', ev => {
+    primaryImage.classList.remove('on');
+  });
 
-	article.appendChild(title);
-	article.appendChild(primaryImage);
-	article.appendChild(primaryImageSmall);
-	article.appendChild(objectInfo);
-	article.appendChild(medium);
+  article.appendChild(title);
+  article.appendChild(primaryImage);
+  article.appendChild(primaryImageSmall);
+  article.appendChild(objectInfo);
+  article.appendChild(medium);
 
-	objectInfo.appendChild(objectName);
-	if(obj.objectDate) {
-		objectInfo.appendChild(objectDate);
-	}
+  objectInfo.appendChild(objectName);
+  if(obj.objectDate) {
+    objectInfo.appendChild(objectDate);
+  }
 
-	return article;
+  return article;
 }
 
 async function insertArticles(objIds) {
-	objects = await Promise.all(objIds.map(loadObject))
-	articles = objects.map(buildArticleFromData);
-	articles.forEach(a => results.appendChild(a));
+  objects = await Promise.all(objIds.map(loadObject))
+  articles = objects.map(buildArticleFromData);
+  articles.forEach(a => results.appendChild(a));
 }
 
 async function doSearch(ev) {
-	clearResults();
-	loader.classList.add("waiting");
-	const result = await loadSearch(query.value);
-	objectIDs = result.objectIDs;
-	count.textContent = `found ${objectIDs.length} results for "${query.value}"`;
-	nPages.textContent = Math.ceil(objectIDs.length / pageSize);
-	currentPage = 1;
-	loadPage();
+  clearResults();
+  loader.classList.add("waiting");
+  const result = await loadSearch(query.value);
+  objectIDs = result.objectIDs;
+  count.textContent = `found ${objectIDs.length} results for "${query.value}"`;
+  nPages.textContent = Math.ceil(objectIDs.length / pageSize);
+  currentPage = 1;
+  loadPage();
 }
 
 async function loadPage() {
-	clearResults();
-	const myObjects = objectIDs.slice((currentPage - 1) * pageSize, currentPage * pageSize);
-	loader.classList.add("waiting");
-	await insertArticles(myObjects);
-	loader.classList.remove("waiting");
+  clearResults();
+  const myObjects = objectIDs.slice((currentPage - 1) * pageSize, currentPage * pageSize);
+  loader.classList.add("waiting");
+  await insertArticles(myObjects);
+  loader.classList.remove("waiting");
   pageIndicator.textContent = currentPage;
 }
 
 function nextPage() {
-	currentPage += 1;
-	const nPages = Math.ceil(objectIDs.length / pageSize);
-	if(currentPage > nPages) { currentPage = 1;}
-	loadPage();
+  currentPage += 1;
+  const nPages = Math.ceil(objectIDs.length / pageSize);
+  if(currentPage > nPages) { currentPage = 1;}
+  loadPage();
 }
 function prevPage() {
-	currentPage -= 1;
-	const nPages = Math.ceil(objectIDs.length / pageSize);
-	if(currentPage < 1) { currentPage = nPages;}
-	loadPage();
+  currentPage -= 1;
+  const nPages = Math.ceil(objectIDs.length / pageSize);
+  if(currentPage < 1) { currentPage = nPages;}
+  loadPage();
 }
 
 function clearResults() {
-	while(results.firstChild) {
-		results.firstChild.remove();
-	}
+  while(results.firstChild) {
+    results.firstChild.remove();
+  }
 }
 
 query.addEventListener('change', doSearch);

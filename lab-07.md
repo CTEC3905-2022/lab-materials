@@ -745,8 +745,8 @@ Create this new `async` function `insertArticles` (plural).
 
 ```js
 async function insertArticles(objIds) {
-  objects = await Promise.all(objIds.map(loadObject))
-  articles = objects.map(buildArticleFromData);
+  const objects = await Promise.all(objIds.map(loadObject))
+  const articles = objects.map(buildArticleFromData);
   articles.forEach(a => results.appendChild(a));
 }
 ```

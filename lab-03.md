@@ -10,21 +10,21 @@ So we will go through that process too.
 Hopefully last weeks lab was not too difficult.
 But for completeness and as an example, we have released a basic "*solution*".
 
-The [lab-solutions repository](https://github.com/CTEC3905-2020-21/lab-solutions) in the [CTEC3905-2020-21](https://github.com/CTEC3905-2020-21) github organisation is where we will release example solutions to the lab exercises each week.
+The [lab-solutions repository](https://github.com/CTEC3905-2022/lab-solutions) in the [CTEC3905-2022](https://github.com/CTEC3905-2022) github organisation is where we will release example solutions to the lab exercises each week.
 
 The solution for lab-01 can be viewed in three ways.
 
-1. View the [code on github](https://github.com/CTEC3905-2020-21/lab-solutions/tree/master/lab-01) via a browser
-1. View the [result in github pages](https://ctec3905-2020-21.github.io/lab-solutions/lab-01/) via the browser
+1. View the [code on github](https://github.com/CTEC3905-2022/lab-solutions/tree/master/lab-01) via a browser
+1. View the [result in github pages](https://CTEC3905-2022.github.io/lab-solutions/lab-01/) via the browser
 1. `Clone` the repository onto your machine using git (explanation to follow) and play with the code directly.
 
-Review the [example code](https://github.com/CTEC3905-2020-21/lab-solutions/tree/master/lab-01) and the [working webpage](https://ctec3905-2020-21.github.io/lab-solutions/lab-01/).
+Review the [example code](https://github.com/CTEC3905-2022/lab-solutions/tree/master/lab-01) and the [working webpage](https://CTEC3905-2022.github.io/lab-solutions/lab-01/).
 If there is anything you think needs further explanation, help others by asking a good question about it.
 
-Notice that the lab-solutions repository includes a `readme.md` file in the root directory and Github displays the contents of the `readme.md` file on [the repository home page](https://github.com/CTEC3905-2020-21/lab-solutions).
+Notice that the lab-solutions repository includes a `readme.md` file in the root directory and Github displays the contents of the `readme.md` file on [the repository home page](https://github.com/CTEC3905-2022/lab-solutions).
 The `.md` file name indicates this file is in **markdown** format.
 Markdown is a simple text format that easily converts to HTML.
-> These lab materials are also written using markdown - see [github](https://github.com/CTEC3905-2020-21/lab-materials)
+> These lab materials are also written using markdown - see [github](https://github.com/CTEC3905-2022/lab-materials)
 
 The `readme.md` file contains an index for the solutions, currently only the solutions for the first two labs have been released.
 In future weeks, we will add more example code to the repository and more links here.
@@ -55,7 +55,7 @@ cd "path/to/Front End Web Dev"
 > cd "c:\path\to\Front End Web Dev"
 > ```
 
-Visit the [lab-solutions](https://github.com/CTEC3905-2020-21/lab-solutions) repository on github.
+Visit the [lab-solutions](https://github.com/CTEC3905-2022/lab-solutions) repository on github.
 You should see a green *Code* button.
 Click the button and copy the url.
 
@@ -69,7 +69,7 @@ Make sure you are in the correct location before running this command.
 Clone the github repository.
 
 ```bash
-git clone https://github.com/CTEC3905-2020-21/lab-solutions.git
+git clone https://github.com/CTEC3905-2022/lab-solutions.git
 ```
 > You can paste the link you copied here.
 
@@ -185,7 +185,7 @@ You may have already created your assignment repository, if not then **follow th
 Find your P-number from the (sorry, very long) list.
 This will generate a repo with simple starter code.
 
-The repo for your assignment code is private and is owned by the CTEC3905-2020-21 organisation.
+The repo for your assignment code is private and is owned by the CTEC3905-2022 organisation.
 Your github user has permissions to edit it, so it can be viewed only by you and module staff.
 
 Now **clone this repo to the computer on which you are working**.

@@ -3,14 +3,17 @@
 In this lab session we introduce the three software tools that will be used in this module.
 
 - [Google Chrome](https://www.google.com/intl/en_uk/chrome/) (web browser)
-- [Atom](https://atom.io/) (text editor)
+- [VSCode](https://code.visualstudio.com/) (text editor)
 - [GIT](http://git-scm.com/) (version control system)
 
 If you need to, use the links above to install the software.
 
 ## Google Chrome and the developer tools
 
-Open Google Chrome and visit the [Atom](https://atom.io/) website.
+Open Google Chrome and visit the [Google Chrome](https://www.google.com/intl/en_uk/chrome/) website.
+
+> You may want to set google chrome as your default browser for the duration of this module
+
 Scroll down the page and notice the structure.
 There is a menu at the top, followed by a series of distinct sections and a footer at the bottom of the page.
 
@@ -24,23 +27,49 @@ Try to find elements within the nested structure that correspond to the visible 
 Notice that when elements are selected in the developer tools, they are highlighted on the page.
 Also notice that the style rules of the selected element are also provided.
 
-Find the element with `class="hero-logo-circles"`, it should contain a series of images.
-Select some of the images, the animation is controlled entirely by the browser using CSS rules.
+Notice at the top-right corner of the page, there is a rotating animation in the background.
+Select the element with `class=".chr-homepage-hero__animation--top-right"` from within the developer tools.
+It should be a `<div>` element containing an image which is rotating.
+
+The animation is controlled entirely by the browser using CSS rules.
+If you have the correct `<div>` selected, you should see the rules for `.chr-homepage-hero__animation--top-right` include a rule like this.
+
+```css
+chr-homepage-hero__animation--top-right {
+    -webkit-animation-duration: 10s;
+    animation-duration: 10s;
+    right: -22%;
+    top: -20%;
+}
+```
+
+Notice the `animation-duration` property is set to `10s`.
+This means the element will complete its animation (`full-rotate-left`) in 10 seconds.
+Click on the value `10s` so it becomes editable.
+Replace it with `1s` and press enter.
+
+> It can be tricky to find the elements and navigate to the correct place in the developer tools. 
+If you struggle with this, ask your lab tutor to help.
+
+If you managed to edit the property correctly, you should see that the image now rotates much faster.
 
 Explore the site, understand how it is structured and ask questions if you have them.
 
-## Atom text editor
+## VSCode text editor
 
 Now we are going to create our first project.
 
-Create a folder where you will store all the module code and *within* that folder, create a folder called **lab-work**.
-This will become a git repository eventually containing all the work from the lab sessions.
+Create a folder where you will store all the code for CTEC3905 and *within* that folder, create a folder called **lab-work**.
+
+This folder will become a git repository eventually containing all the work from the lab sessions.
+
+Open VSCode and select `File -> Open Folder` and select your **lab-work** folder.
+This should open a panel on the left side showing your empty folder.
 
 Its best to keep the code for each lab session separate.
-For todays work, create another folder called **lab-01** within the **lab-work** folder.
+Use VSCode to create another folder called **lab-01** within the **lab-work** folder for today's work.
 
-Open Atom and select `File -> Open Folder` or `ctrl+shift+O` and select your **lab-01** folder.
-This should open a panel on the left side showing your empty folder.
+> There is an icon you can use for creating a folder, or you can right-click on the explorer panel and choose the `New Folder...` option.
 
 ### Create an HTML document
 
@@ -56,12 +85,11 @@ Good indentation throughout your assignment code is worth 5% of the mark.
 A single mistake will cost you 2.5%, multiple mistakes will cost you 5%.
 
 Load the page into Google Chrome by opening the file in your file manager.
-If Google Chrome is not your default browser, you may want to set it to be the default (at least during the course of this module).
-Alternatively, with the file open in Atom, click and drag the tab at the top of the file and drop it as a new tab in Chrome (i.e. drop onto the tab container at the top of the Chrome window).
+Alternatively, with the file open in VSCode, click and drag the tab at the top of the file and drop it as a new tab in Chrome (i.e. drop onto the tab container at the top of the Chrome window).
 
 Play around a bit.
 Make some changes and see how they affect your page.
-Use `ctrl-R` to reload the page in your browser each time you make a change.
+Use `ctrl-R` in Chrome to reload the page in your browser each time you make a change.
 
 Check your code in the [HTML validator](https://validator.w3.org/) and correct any errors (repeat by validating each time you add more code).
 
@@ -76,7 +104,7 @@ Create a **styles.css** file and link it in your HTML file by adding this line i
 Add the following line to your **styles.css** file:
 
 ```css
-body { background: #099; }
+body { background: yellow; }
 ```
 
 Reload the page in Chrome.
@@ -98,13 +126,73 @@ alert("Hello!");
 
 Reload the page in the browser.
 
-If the above works, change it to:
+If the above works, *change* it to:
 
 ```js
 console.log("Hello!");
 ```
 
 Reload the page, open the developer tools and check the `Console` panel (it should say “Hello!”).
+
+Add an element with an `id="myElement"` attribute into the `<body>` element in your HTML.
+
+> It's fine if you have more than this in your `<body>` element.
+
+```html
+<body>
+    <p id="myElement">
+        I'm a paragraph
+    </p>
+    <script src="scripts.js"></script>
+</body>
+```
+
+Type the following into the JavaScript console.
+
+```js
+myElement
+```
+
+You should see that you have access to the element directly.
+Try this:
+
+```js
+myElement.textContent = "I've changed the content!";
+```
+
+You should see that the page has been updated.
+
+> Refreshing the page reloads the original content.
+
+## CSS classes
+
+Add the following to your **styles.css** file:
+
+```css
+.my-class {
+    background-color: red;
+    color: yellow;
+}
+```
+
+Now, in the `<body>` of your HTML file, add an element with the attribute `class="my-class`.
+
+> Again, it's fine if you have more than this in your `<body>` element.
+
+```html
+<body>
+    <p id="myElement">
+        I'm a paragraph
+    </p>
+    <p class="my-class">
+        I'm a different class of paragraph.
+    </p>
+    <script src="scripts.js"></script>
+</body>
+```
+
+> Take note that we used cammelCase for the `id` attribute because it was used in JavaScript but we hyphenated the `class` attribute because it was used in CSS.
+> Following these conventions is easy if you get into the correct habits.
 
 ## Git version control
 
@@ -113,6 +201,8 @@ Git allows us to make incremental improvements to our code whilst also allowing 
 
 Open the git command line.
 If you are on Windows, use the `git bash` console.
+
+> On mac or linux, a regular terminal will do
 
 Change the current directory to your **lab-work** folder:
 
@@ -135,6 +225,8 @@ git status
 Make sure you **always** check your code with the [HTML validator](https://validator.w3.org/) before committing.
 Try not to commit invalid code to your repository.
 
+> This is important, never commit anything invalid or broken to your project
+
 Before committing, git requires that we place changes into a *staging area* also known as *the index*.
 
 Add the whole project into the staging area.
@@ -148,7 +240,7 @@ The last dot is important, it refers to the current folder.
 Finally, commit your work to the repository with a simple message.
 
 ```bash
-git commit -m "lab-01: my first commit"
+git commit -m "lab-01: a basic HTML template with some styles and JavaScript"
 ```
 
 Now, make some changes to your project and repeat the steps with a new commit message.
@@ -157,9 +249,11 @@ Now, make some changes to your project and repeat the steps with a new commit me
 
 We have explored the basic workflow which we will use in this module and which you will need to use for your assignment.
 
-- Using Atom to write HTML, CSS and JavaScript code.
-- Viewing your document in Google Chrome, using the developer tools.
+- Using VSCode to write HTML, CSS and JavaScript code
+- Viewing your document in Google Chrome
+- Using the developer tools to view the DOM
+- Using the JavaScript console 
 - Validating your code with online validators
 - Committing your updates to a git repository
 
-NOTE: if you've finished, please set up a GitHub account if you don't have one.
+Continue making tweaks to your page until you are satisfied and set up a GitHub account if you don't have one.

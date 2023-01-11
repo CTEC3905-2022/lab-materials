@@ -245,6 +245,8 @@ git commit -m "lab-01: a basic HTML template with some styles and JavaScript"
 
 Now, make some changes to your project and repeat the steps with a new commit message.
 
+Continue making tweaks to your page until you are satisfied.
+
 ## Conclusion
 
 We have explored the basic workflow which we will use in this module and which you will need to use for your assignment.
@@ -256,4 +258,4 @@ We have explored the basic workflow which we will use in this module and which y
 - Validating your code with online validators
 - Committing your updates to a git repository
 
-Continue making tweaks to your page until you are satisfied and set up a GitHub account if you don't have one.
+If you don't have one, you will need to set up a [GitHub](https://www.github.com) account.

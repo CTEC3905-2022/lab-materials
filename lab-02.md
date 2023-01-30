@@ -172,6 +172,9 @@ This moves the `nav` to the right-hand edge of its container (in this case, the 
 You should see the main and nav elements squeeze onto one row.
 If your site does not do this, speak to your tutor to find out why.
 
+> Using `float` for layout like this was very common until *flexbox* was introduced.
+> In general, `float` is not a good idea for layouts, `flex` or `grid` is *always* much better.
+
 ## Use flexbox to achieve a similar result
 
 Remove the `float: right` rule from the `nav` ruleset.
@@ -281,9 +284,9 @@ Try linking another function that sets `myTrigger.textContent` to a value of you
 
 If you got this far, well done.
 
-Check your code with the [HTML validator](https://validator.w3.org/) before committing the code to your **lab-work** repository.
+Check your code with the [HTML validator](https://validator.w3.org/) before committing the code to your *lab-work* repository.
 Refer to the *lab 1* instructions or ask your tutors as necessary.
-Remember that to use the Atom git integration, you would need to open the **lab-work** folder in Atom.
+Remember that to use the VSCode git integration, you would need to open the *lab-work* **folder** in VSCode.
 
 ## 02 Lab learning outcomes
 

@@ -10,7 +10,8 @@ So we will go through that process too.
 Hopefully last weeks lab was not too difficult.
 But for completeness and as an example, we have released a basic "*solution*".
 
-The [lab-solutions repository](https://github.com/CTEC3905-2022/lab-solutions) in the [CTEC3905-2022](https://github.com/CTEC3905-2022) github organisation is where we will release example solutions to the lab exercises each week.
+The [lab-solutions repository](https://github.com/CTEC3905-2022/lab-solutions) in the [CTEC3905-2022](https://github.com/CTEC3905-2022) github organisation is where we store example solutions to the lab exercises.
+You should only review these solutions once you have attempted the exercise yourself.
 
 The solution for lab-01 can be viewed in three ways.
 
@@ -26,8 +27,7 @@ The `.md` file name indicates this file is in **markdown** format.
 Markdown is a simple text format that easily converts to HTML.
 > These lab materials are also written using markdown - see [github](https://github.com/CTEC3905-2022/lab-materials)
 
-The `readme.md` file contains an index for the solutions, currently only the solutions for the first two labs have been released.
-In future weeks, we will add more example code to the repository and more links here.
+The `readme.md` file contains an index for the solutions.
 
 ## Cloning from github
 
@@ -46,7 +46,7 @@ cd path/to/CTEC3905
 > ```
 
 
-Note that if you have spaces in the path, then you will need to wrap the path in "double quotes".
+Note that if you have *spaces* in the path, then you will need to wrap the path in "double quotes".
 ```bash
 cd "path/to/Front End Web Dev"
 ```
@@ -74,14 +74,14 @@ git clone https://github.com/CTEC3905-2022/lab-solutions.git
 > You can paste the link you copied here.
 
 This will have created a folder called **lab-solutions** in your current directory.
-Open the **folder** in Atom and look through the code.
+Open the **folder** in VSCode and look through the code.
 
 ### Remote repositories
 
 Git repositories are linked to each other through references known as **remotes**.
 A **remote** is basically just a pointer to another git repository.
 
-Cloned repositories alays have a **remote** called `origin` pointing to the source repository.
+Cloned repositories always have a **remote** called `origin` pointing to the source repository.
 
 We are going to check the remotes set up on the **lab-solutions** repository you just cloned.
 They should point back to the origin.

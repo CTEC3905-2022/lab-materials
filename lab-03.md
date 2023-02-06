@@ -57,6 +57,9 @@ cd "path/to/Front End Web Dev"
 
 Visit the [lab-solutions](https://github.com/CTEC3905-2022/lab-solutions) repository on github.
 You should see a green *Code* button.
+
+![lab-solutions github page](images/lab-solutions.png)
+
 Click the button and copy the url.
 
 > If you have [setup an SSH key](https://docs.github.com/en/free-pro-team@latest/github/authenticating-to-github/connecting-to-github-with-ssh) on your github account then choose the **SSH** option, otherwise, choose **HTTPS**.

@@ -56,7 +56,7 @@ Adjust the colours and box-model properties as necessary to make the links appea
 
 Now add a new `div` element **before** the `nav` element.
 This will be a button we can use to "open" and "close" the mobile `nav`.
-Inside your `div` add the uncode character for *identical to* (`&#8801;`).
+Inside your `div` add the unicode character for *identical to* (`&#8801;`).
 
 ```html
 <div id="menuToggler">&#8801;</div>

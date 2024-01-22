@@ -27,31 +27,48 @@ Try to find elements within the nested structure that correspond to the visible 
 Notice that when elements are selected in the developer tools, they are highlighted on the page.
 Also notice that the style rules of the selected element are also provided.
 
-Notice at the top-right corner of the page, there is a rotating animation in the background.
-Select the element with `class=".chr-homepage-hero__animation--top-right"` from within the developer tools.
-It should be a `<div>` element containing an image which is rotating.
+### Edit the DOM
 
-The animation is controlled entirely by the browser using CSS rules.
-If you have the correct `<div>` selected, you should see the rules for `.chr-homepage-hero__animation--top-right` include a rule like this.
+Choose an element in the page, something fairly large.
+For example, this one.
 
-```css
-chr-homepage-hero__animation--top-right {
-    -webkit-animation-duration: 10s;
-    animation-duration: 10s;
-    right: -22%;
-    top: -20%;
-}
+ ```HTML
+<div class="chr-chrome-hero is-loaded">
 ```
 
-Notice the `animation-duration` property is set to `10s`.
-This means the element will complete its animation (`full-rotate-left`) in 10 seconds.
-Click on the value `10s` so it becomes editable.
-Replace it with `1s` and press enter.
+With the element selected in the `Elements` tab, look at the `Styles` panel below.
 
 > It can be tricky to find the elements and navigate to the correct place in the developer tools. 
 If you struggle with this, ask your lab tutor to help.
 
-If you managed to edit the property correctly, you should see that the image now rotates much faster.
+
+At the top of the panel, there should be something like this:
+
+```CSS
+element.style {
+}
+```
+
+Click into this code and add the following:
+
+```CSS
+element.style {
+    background: red;
+}
+```
+
+You should see the element background becomes red.
+
+Now add the following:
+
+```CSS
+element.style {
+    background: red;
+    rotate: 10deg;
+}
+```
+
+If you managed to edit the CSS rules correctly, you should see that the entire element has been rotated.
 
 Explore the site, understand how it is structured and ask questions if you have them.
 

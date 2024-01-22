@@ -70,6 +70,9 @@ element.style {
 
 If you managed to edit the CSS rules correctly, you should see that the entire element has been rotated.
 
+![screenshot](images/lab-01.png)
+
+
 Explore the site, understand how it is structured and ask questions if you have them.
 
 ## VSCode text editor

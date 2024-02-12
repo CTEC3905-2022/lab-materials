@@ -6,7 +6,7 @@ To help us, we will need to use the browser developer tools to see how our site 
 
 ## Set up
 
-Create a folder **lab-04** for this week's code and open the folder in atom.
+Create a folder **lab-04** for this week's code and open the folder in vscode.
 Create a standard **index.html** file and link it to a **styles.css** file.
 In the `head` element, add the following `meta` tag.
 
